@@ -53,7 +53,18 @@ public class Juego {
 		}
 	}
 	private void guardarPersonajesEnArchivo() {
-		
+		try {
+			FileWriter writer = new FileWriter("./src/personajes_out.txt", true);
+			Iterator<Personaje> iterator = this.competidores.iterator();
+			while( iterator.hasNext()) {
+		//		System.out.println(iterator.next().toString());
+				writer.write(iterator.next().toString() + "\n");
+			}
+			System.out.println("Guardado completo...");
+			writer.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		
 	}
 	public void menu(Integer opc) throws NumberFormatException, IOException {

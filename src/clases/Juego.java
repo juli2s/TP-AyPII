@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.ListIterator;
+
 
 public class Juego {
 	ArrayList<Personaje> competidores = new ArrayList<Personaje>();
@@ -52,12 +52,13 @@ public class Juego {
 			System.err.println(e);
 		}
 	}
+
 	private void guardarPersonajesEnArchivo() {
 		try {
 			FileWriter writer = new FileWriter("./src/personajes_out.txt", true);
 			Iterator<Personaje> iterator = this.competidores.iterator();
-			while( iterator.hasNext()) {
-		//		System.out.println(iterator.next().toString());
+			while (iterator.hasNext()) {
+				// System.out.println(iterator.next().toString());
 				writer.write(iterator.next().toString() + "\n");
 			}
 			System.out.println("Guardado completo...");
@@ -65,88 +66,100 @@ public class Juego {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
-	}
-	public void menu(Integer opc) throws NumberFormatException, IOException {
-		boolean salir = true;
 
-		/*
-		 * en este menu irían los metodos que estan listados en el tp:
-		 * 
-		 * Para los sub menu, creo que podríamos hacer un metodo que liste un menu que
-		 * pasamos por parametro para no repetir tanto codigo.
-		 * 
-		 * El menú principal deberá permitir: > Administración de Personajes - Carga
-		 * desde archivo - Creación - Listado - Guardar en archivo todos los personajes
-		 * > Administración de Ligas - Carga desde archivo - Creación - Listado -
-		 * Guardar en archivo todas las ligas > Realización de combates - Personaje
-		 * contra Liga (definiendo característica)A - Liga contra Liga (definiendo
-		 * característica) > Reportes - Todos los personajes o ligas que venzan a un
-		 * personaje dado para cierta característica - Listado ordenado de personajes
-		 * por múltiples características
-		 */
+	}
+
+	public void menu() throws NumberFormatException, IOException {
+		boolean salir = true;
+		int opc = 0;
 
 		do {
 
-			switch (opc) {
+			switch (mostrarSubMenu(("\n"+"Menu principal: \n" + "1 - Administración de personajes  \n"
+					+ "2 - Administracion de ligas \n" + "3 - Combates \n" + "4 - Reportes \n" + "5- Salir \n"))) {
 			case 1:
-				switch (mostrarSubMenu("1- Cargar personajes desde archivo \n" + "2- Cargar personaje manualmente \n"
-						+ "3- Listar personajes \n" + "4- Guardar personajes en archivo")) {
+				while (opc != 5) {
 
-				case 1:
-					cargarPersonajesDesdeArchivo();
-					menu(opc);
-					break;
-				case 2:
-					System.out.println("metodo para cargar personajes manualmente");
-					break;
-				case 3:
-					System.out.println("metodo para listar personajes");
-					break;
-				case 4:
-					guardarPersonajesEnArchivo();
-					break;
+					switch (mostrarSubMenu("\n"+"1- Cargar personajes desde archivo \n" + "2- Cargar personaje manualmente \n"
+							+ "3- Listar personajes \n" + "4- Guardar personajes en archivo\n" + "5- atrás\n")) {
+
+					case 1:
+						cargarPersonajesDesdeArchivo();
+						break;
+					case 2:
+						System.out.println("metodo para cargar personajes manualmente");
+						break;
+					case 3:
+						System.out.println("metodo para listar personajes");
+						break;
+					case 4:
+						guardarPersonajesEnArchivo();
+						break;
+					case 5:
+						opc = 5;
+						menu();
+					}
 				}
+				opc = 0;
 				break;
 			case 2:
-				switch (mostrarSubMenu("1- Cargar ligas desde archivo \n" + "2- Cargar Ligas manualmente \n"
-						+ "3- Listar Ligas \n" + "4- Guardar Ligas en archivo")) {
 
-				case 1:
-					System.out.println("Metodo para cargar Ligas desde archivo");
-					break;
-				case 2:
-					System.out.println("metodo para cargar Ligas manualmente");
-					break;
-				case 3:
-					System.out.println("metodo para listar Ligas");
-					break;
-				case 4:
-					System.out.println("metodo para guardar Ligas en un archivo");
-					break;
+				while (opc != 5) {
+					switch (mostrarSubMenu("\n"+"1- Cargar ligas desde archivo \n" + "2- Cargar Ligas manualmente \n"
+							+ "3- Listar Ligas \n" + "4- Guardar Ligas en archivo \n" + "5- atrás\n")) {
+
+					case 1:
+						System.out.println("Metodo para cargar Ligas desde archivo");
+						break;
+					case 2:
+						System.out.println("metodo para cargar Ligas manualmente");
+						break;
+					case 3:
+						System.out.println("metodo para listar Ligas");
+						break;
+					case 4:
+						System.out.println("metodo para guardar Ligas en un archivo");
+						break;
+					case 5:
+						opc = 5;
+						menu();
+					}
 				}
+				opc = 0;
 				break;
 			case 3:
-				switch (mostrarSubMenu("1- Combate Personaje contra liga \n" + "2- Combate Liga contra liga \n")) {
+				while (opc != 3) {
+					switch (mostrarSubMenu("\n"+"1- Combate Personaje contra liga \n" + "2- Combate Liga contra liga \n" + "3- atrás\n")) {
 
-				case 1:
-					System.out.println("metodo para combate  entre personaje y Ligas");
-					break;
-				case 2:
-					System.out.println("metodo para combate entre Ligas ");
-					break;
+					case 1:
+						System.out.println("metodo para combate  entre personaje y Ligas");
+						break;
+					case 2:
+						System.out.println("metodo para combate entre Ligas");
+						break;
+					case 3:
+						opc = 3;
+						menu();
+					}
 				}
-
+				opc = 0;
 				break;
 			case 4:
-				switch (mostrarSubMenu("1- Todos los personajes o ligas que venzan a un personaje dado para cierta caract\n" + " 2- Listado ordenado de personajes por múltiples características \n")) {
-				case 1:
-					System.out.println("metodo para reporte de personajes o ligas que venzan a otro");
-					break;
-				case 2: 
-					System.out.println("metodo para reporte de personajes por multiples caracteristicas");
-					break;
+				while (opc != 3) {
+					switch (mostrarSubMenu("\n"+"1- Todos los personajes o ligas que venzan a un personaje dado para cierta caract\n"
+						+ " 2- Listado ordenado de personajes por múltiples características \n"+"3- atrás\n")) {
+					case 1:
+						System.out.println("metodo para reporte de personajes o ligas que venzan a otro");
+						break;
+					case 2:
+						System.out.println("metodo para reporte de personajes por multiples caracteristicas");
+						break;
+					case 3:
+						opc = 3;
+						menu();
+					}
 				}
+				opc = 0;
 				break;
 			case 5:
 				salir = !salir;

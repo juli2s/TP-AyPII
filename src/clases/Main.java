@@ -11,8 +11,9 @@ public class Main {
 		Juego j = new Juego();
 		
 		
-		System.out.println("Menu principal: \n" + "1 - opcion 1 \n" + "2 - opcion 2 \n" + "3 - opcion 3 \n"
-				+ "4 - opcion 4 \n" + "5 - opcion 5 \n" + "6 - Salir");
+		System.out.println("Menu principal: \n" + "1 - Administración de personajes  \n" + "2 - Administracion de ligas \n" + "3 - Combates \n"
+				+ "4 - Reportes \n" + "5 - Salir \n");
+		System.out.println("Ingrese la opción elegida: ");
 		BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
 		String inputString = null;
 		try {
@@ -23,7 +24,17 @@ public class Main {
 		}
 		Integer opcion = Integer.parseInt(inputString);
 
-		j.menu(opcion);
+		try {
+			
+			j.menu(opcion);
+		
+		} catch (NumberFormatException e) {
+			
+			e.printStackTrace();
+		} catch (IOException e) {
+			
+			e.printStackTrace();
+		}
 
 	}
 }

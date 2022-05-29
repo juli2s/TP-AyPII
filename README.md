@@ -1,2 +1,8 @@
 # TP-AyPII
-TP AyP II untref 2022
+
+Integrantes: 
+
+Agüero, Alejandro
+Dos Santos,Julián
+Funes, Tomás
+Gomez, Romina

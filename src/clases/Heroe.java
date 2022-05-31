@@ -13,4 +13,10 @@ public class Heroe extends Personaje {
 		return 0;
 	}
 
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return "Heroe \n" + super.toString();
+	}
+
 }

@@ -13,4 +13,11 @@ public class Villano extends Personaje {
 		return 0;
 	}
 
+	@Override	
+	public String toString() {
+		// TODO Auto-generated method stub
+		return "Villano \n" + super.toString();
+	}
+
+
 }

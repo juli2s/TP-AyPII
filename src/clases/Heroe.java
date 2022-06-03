@@ -7,10 +7,4 @@ public class Heroe extends Personaje {
 		// TODO Auto-generated constructor stub
 	}
 
-	@Override
-	public int compareTo(Personaje o) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
 }

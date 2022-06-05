@@ -19,10 +19,19 @@ public class Juego {
 	List<Personaje> competidores = new LinkedList<Personaje>();
 	BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
 	
+	private static Juego instancia;
+	
 	private HashMap<String,Personaje> heroes = new HashMap<String,Personaje>();
 	private HashMap<String,Personaje> villanos = new HashMap<String,Personaje>();
 	
 	
+	public static Juego getInstance(){
+		if (instancia == null)
+		{
+			instancia = new Juego();
+		}
+		return instancia;
+	}
 
 	/*
 	 * post inicializa el juego

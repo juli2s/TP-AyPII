@@ -12,7 +12,6 @@ public class peleasTests {
 	   jugador1 = new Personaje("Romi", "SuperRomi", 50 ,30 ,40, 60);
 	   jugador2 = new Personaje("Fer", "SuperFer", 40 ,30 ,40, 60);
 	   
-	   Juego juego = new Juego();
 	   
 	   boolean esGanador = jugador1.esGanador(Atributo.VELOCIDAD, jugador2);
 	   
@@ -29,7 +28,6 @@ public class peleasTests {
 	   jugador1 = new Personaje("Romi", "SuperRomi", 50 ,30 ,40, 60);
 	   jugador2 = new Personaje("Fer", "SuperFer", 50 ,40 ,40, 60);
 	   
-	   Juego juego = new Juego();
 	   
 	   boolean esGanador = jugador1.esGanador(Atributo.VELOCIDAD, jugador2);
 	   
@@ -46,7 +44,6 @@ public class peleasTests {
 	   jugador1 = new Personaje("Romi", "SuperRomi", 50 ,30 ,40, 60);
 	   jugador2 = new Personaje("Fer", "SuperFer", 60 ,20 ,40, 60);
 	   
-	   Juego juego = new Juego();
 	   
 	   boolean esGanador = jugador1.esGanador(Atributo.RESISTENCIA, jugador2);
 	   
@@ -63,7 +60,7 @@ public class peleasTests {
 	   jugador1 = new Personaje("Romi", "SuperRomi", 50 ,10 ,40, 70);
 	   jugador2 = new Personaje("Fer", "SuperFer", 60 ,20 ,40, 60);
 	   
-	   Juego juego = new Juego();
+	   Juego juego =  Juego.getInstance();
 	   
 	   boolean esGanador = jugador1.esGanador(Atributo.RESISTENCIA, jugador2);
 	   
@@ -80,7 +77,6 @@ public class peleasTests {
 	   jugador1 = new Personaje("Romi", "SuperRomi", 50 ,20 ,40, 60);
 	   jugador2 = new Personaje("Fer", "SuperFer", 50 ,20 ,40, 60);
 	   
-	   Juego juego = new Juego();
 	   
 	   boolean esGanador = jugador1.esGanador(Atributo.RESISTENCIA, jugador2);
 	   

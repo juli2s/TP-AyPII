@@ -21,6 +21,8 @@ public class Personaje implements Comparable<Personaje>{
 		this.nombreReal = nombreReal;
 		this.nombrePersonaje = nombrePersonaje;
 		
+		this.atributoInicial = Atributo.VELOCIDAD;
+		
 		caracteristicas.put(Atributo.VELOCIDAD,velocidad);
 		caracteristicas.put(Atributo.FUERZA,fuerza);
 		caracteristicas.put(Atributo.RESISTENCIA,resistencia);

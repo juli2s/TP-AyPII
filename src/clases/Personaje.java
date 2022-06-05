@@ -1,14 +1,18 @@
 package clases;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 
 
-public abstract class Personaje implements Comparable<Personaje>{
+public class Personaje implements Comparable<Personaje>{
 
 	private HashMap<Atributo,Integer> caracteristicas = new HashMap<Atributo,Integer>();
 	
 	private String nombreReal;
 	private String nombrePersonaje;
+	private Atributo atributoInicial;
 	
 	public Personaje(String nombreReal,String nombrePersonaje,Integer velocidad,Integer fuerza,Integer resistencia,Integer destreza) {
 		
@@ -16,6 +20,8 @@ public abstract class Personaje implements Comparable<Personaje>{
 		
 		this.nombreReal = nombreReal;
 		this.nombrePersonaje = nombrePersonaje;
+		
+		this.atributoInicial = Atributo.VELOCIDAD;
 		
 		caracteristicas.put(Atributo.VELOCIDAD,velocidad);
 		caracteristicas.put(Atributo.FUERZA,fuerza);
@@ -47,6 +53,19 @@ public abstract class Personaje implements Comparable<Personaje>{
 		this.nombrePersonaje = nombrePersonaje;
 	}
 	
+	public boolean esGanador(Atributo atributo, Personaje contrincante) {
+		//habria que chequear que los personajes pertenezcan al juego?
+		this.atributoInicial = atributo;
+		boolean esGanador = false;
+		
+		if (this.compareTo(contrincante) > 0 )
+		{
+			esGanador = true;
+		}
+		
+		return esGanador;
+	}
+	
 	@Override
 	public String toString() {
 		return this.nombrePersonaje + this.nombreReal;
@@ -54,7 +73,7 @@ public abstract class Personaje implements Comparable<Personaje>{
 	
 	@Override
 	public int compareTo(Personaje other) {
-		Atributo atributo = Atributo.DESTREZA;
+		Atributo atributo = this.atributoInicial;
 		
 		for(int i = 0; i < 4; i++) {
 			if(this.getCaracteristicas().get(atributo).equals(other.getCaracteristicas().get(atributo))){

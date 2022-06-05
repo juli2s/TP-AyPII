@@ -6,19 +6,36 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.LinkedList;
+import java.util.PriorityQueue;
 
 
 public class Juego {
 	List<Personaje> competidores = new LinkedList<Personaje>();
 	BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
+	
+	private HashMap<TipoPersonaje,HashMap<String,Personaje>> contrincantes = new HashMap<TipoPersonaje,HashMap<String,Personaje>>();
+	private HashMap<String,Personaje> heroes = new HashMap<String,Personaje>();
+	private HashMap<String,Personaje> villanos = new HashMap<String,Personaje>();
+	
+	
+	/*
+	   Ojo que no estoy usando el patron de diseño pero necesitaba inicializar el map
+	 */
+	public Juego()
+	{
+		contrincantes.put(TipoPersonaje.HEROE, this.heroes);
+		contrincantes.put(TipoPersonaje.VILLANO, this.villanos);
+	}
 
 	/*
 	 * post inicializa el juego
 	 */
-
+    
 	private void cargarPersonajesDesdeArchivo() {
 		try {
 			FileReader archivo = new FileReader("./src/personajes.txt");
@@ -29,15 +46,20 @@ public class Juego {
 				String[] data = linea.split(",");
 
 				if (data[0].equals("Héroe")) {
-					Heroe h = new Heroe(data[1], data[2], Integer.parseInt(data[3].trim()),
+					Personaje h = new Personaje(data[1], data[2], Integer.parseInt(data[3].trim()),
 							Integer.parseInt(data[4].trim()), Integer.parseInt(data[5].trim()),
 							Integer.parseInt(data[6].trim()));
+					
+					heroes.put(data[1],h);
 					this.competidores.add(h);
+					
+					
 				}
 				if (data[0].equals("Villano")) {
-					Villano v = new Villano(data[1], data[2], Integer.parseInt(data[3].trim()),
+					Personaje v = new Personaje(data[1], data[2], Integer.parseInt(data[3].trim()),
 							Integer.parseInt(data[4].trim()), Integer.parseInt(data[5].trim()),
 							Integer.parseInt(data[6].trim()));
+					villanos.put(data[1],v);
 					this.competidores.add(v);
 				}
 
@@ -74,6 +96,25 @@ public class Juego {
 			e.printStackTrace();
 		}
 
+	}
+	
+	public boolean esGanador(Atributo atributo, Personaje contrincante1, Personaje contrincante2) {
+		//habria que chequear que los personajes pertenezcan al juego?
+		boolean esGanador = false;
+		List<Personaje> competidores = new ArrayList<Personaje>();
+		competidores.add(contrincante1);
+		competidores.add(contrincante2);
+		
+		
+		Collections.sort(competidores, new ComparadorPorAtributo(atributo));
+		
+		
+		if (competidores.get(1).getNombrePersonaje().equals(contrincante1.getNombrePersonaje()))
+		{
+			esGanador = true;
+		}
+		
+		return esGanador;
 	}
 
 	public void menu() throws NumberFormatException, IOException {

@@ -13,7 +13,10 @@ public class ComparadorPorAtributo implements Comparator<Personaje>{
 
 	
 	public int compare(Personaje a, Personaje b) {
+		
 		for(int i = 0; i < 4; i++) {
+		  
+		    
 			if(a.getCaracteristicas().get(atributo) == b.getCaracteristicas().get(atributo)){
 				atributo = proximoValor(atributo);
 			}

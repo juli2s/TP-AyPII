@@ -3,7 +3,7 @@ package clases;
 import java.util.HashMap;
 
 
-public abstract class Personaje implements Comparable<Personaje>{
+public class Personaje implements Comparable<Personaje>{
 
 	private HashMap<Atributo,Integer> caracteristicas = new HashMap<Atributo,Integer>();
 	

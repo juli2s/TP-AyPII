@@ -89,24 +89,6 @@ public class Juego {
 
 	}
 	
-	public boolean esGanador(Atributo atributo, Personaje contrincante1, Personaje contrincante2) {
-		//habria que chequear que los personajes pertenezcan al juego?
-		boolean esGanador = false;
-		List<Personaje> competidores = new ArrayList<Personaje>();
-		competidores.add(contrincante1);
-		competidores.add(contrincante2);
-		
-		
-		Collections.sort(competidores, new ComparadorPorAtributo(atributo));
-		
-		
-		if (competidores.get(1).getNombrePersonaje().equals(contrincante1.getNombrePersonaje()))
-		{
-			esGanador = true;
-		}
-		
-		return esGanador;
-	}
 
 	public void menu() throws NumberFormatException, IOException {
 		boolean salir = true;

@@ -13,6 +13,24 @@ public class Juego {
 	ArrayList<Personaje> competidores = new ArrayList<Personaje>();
 	BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
 
+	private HashMap<TipoPersonaje,HashMap<String,Personaje>> contrincantes = new HashMap<TipoPersonaje,HashMap<String,Personaje>>();
+	private HashMap<String,Personaje> heroes = new HashMap<String,Personaje>();
+	private HashMap<String,Personaje> villanos = new HashMap<String,Personaje>();
+
+
+	/*
+	   Ojo que no estoy usando el patron de diseño pero necesitaba inicializar el map
+	 */
+	public Juego()
+	{
+		contrincantes.put(TipoPersonaje.HEROE, this.heroes);
+		contrincantes.put(TipoPersonaje.VILLANO, this.villanos);
+	}
+
+	/*
+	 * post inicializa el juego
+	 */
+
 	/*
 	 * post inicializa el juego
 	 */
@@ -87,12 +105,12 @@ public class Juego {
 						
 			if (heroeOVillano == 1) {
 				Heroe h = new Heroe(nombreReal, nombrePersonaje, velocidad, fuerza, resistencia, destreza);
-				this.competidores.add(h);
+				this.heroes.put(h);
 
 			} else if (heroeOVillano == 2) {
 				Villano v = new Villano(nombreReal, nombrePersonaje, velocidad, fuerza, resistencia,
 						destreza);
-				this.competidores.add(v);
+				this.villanos.put(v);
 			}
 
 		} catch (IOException e) {

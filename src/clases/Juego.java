@@ -12,6 +12,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.LinkedList;
 import java.util.PriorityQueue;
+import java.util.Scanner;
 
 
 public class Juego {
@@ -72,6 +73,50 @@ public class Juego {
 		
 		
 	}
+	
+    private void cargarPersonajesManualmente() {
+		
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		Scanner teclado = new Scanner(System.in);
+		
+		try {
+					
+			System.out.println("\n 1 - Heroe 2 - Villano \n");
+			int heroeOVillano = teclado.nextInt();
+			
+			System.out.println("Nombre real \n");
+			String nombreReal = br.readLine();
+			
+			System.out.println("Nombre de personaje \n");
+			String nombrePersonaje = br.readLine();
+			
+			System.out.println("Velocidad \n");
+			int velocidad = teclado.nextInt();
+			
+			System.out.println("Fuerza \n");
+			int fuerza = teclado.nextInt();
+			
+			System.out.println("Resistencia \n");
+			int resistencia = teclado.nextInt();
+			
+			System.out.println("Destreza \n");
+			int destreza = teclado.nextInt();
+						
+			if (heroeOVillano == 1) {
+				Personaje h = new Personaje(nombreReal, nombrePersonaje, velocidad, fuerza, resistencia, destreza);
+				this.heroes.put(nombrePersonaje,h);
+
+			} else if (heroeOVillano == 2) {
+				Personaje v = new Personaje(nombreReal, nombrePersonaje, velocidad, fuerza, resistencia,
+						destreza);
+				this.villanos.put(nombrePersonaje,v);
+			}
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
 
 	private void guardarPersonajesEnArchivo() {
 		try {
@@ -108,7 +153,7 @@ public class Juego {
 						cargarPersonajesDesdeArchivo();
 						break;
 					case 2:
-						System.out.println("metodo para cargar personajes manualmente");
+						cargarPersonajesManualmente();
 						break;
 					case 3:
 						System.out.println("metodo para listar personajes");

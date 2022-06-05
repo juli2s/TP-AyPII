@@ -14,7 +14,7 @@ public class peleasTests {
 	   
 	   Juego juego = new Juego();
 	   
-	   boolean esGanador = juego.esGanador(Atributo.VELOCIDAD, jugador1, jugador2);
+	   boolean esGanador = jugador1.esGanador(Atributo.VELOCIDAD, jugador2);
 	   
 	   System.out.println(esGanador);
 	   
@@ -31,7 +31,7 @@ public class peleasTests {
 	   
 	   Juego juego = new Juego();
 	   
-	   boolean esGanador = juego.esGanador(Atributo.VELOCIDAD, jugador1, jugador2);
+	   boolean esGanador = jugador1.esGanador(Atributo.VELOCIDAD, jugador2);
 	   
 	   System.out.println(esGanador);
 	   
@@ -48,7 +48,7 @@ public class peleasTests {
 	   
 	   Juego juego = new Juego();
 	   
-	   boolean esGanador = juego.esGanador(Atributo.RESISTENCIA, jugador1, jugador2);
+	   boolean esGanador = jugador1.esGanador(Atributo.RESISTENCIA, jugador2);
 	   
 	   System.out.println(esGanador);
 	   
@@ -65,7 +65,7 @@ public class peleasTests {
 	   
 	   Juego juego = new Juego();
 	   
-	   boolean esGanador = juego.esGanador(Atributo.DESTREZA, jugador1, jugador2);
+	   boolean esGanador = jugador1.esGanador(Atributo.RESISTENCIA, jugador2);
 	   
 	   System.out.println(esGanador);
 	   
@@ -82,7 +82,7 @@ public class peleasTests {
 	   
 	   Juego juego = new Juego();
 	   
-	   boolean esGanador = juego.esGanador(Atributo.RESISTENCIA, jugador1, jugador2);
+	   boolean esGanador = jugador1.esGanador(Atributo.RESISTENCIA, jugador2);
 	   
 	   System.out.println(esGanador);
 	   

@@ -7,10 +7,13 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
+import java.util.LinkedList;
 
 
 public class Juego {
-	ArrayList<Personaje> competidores = new ArrayList<Personaje>();
+	
+	List<Personaje> competidores = new LinkedList<Personaje>();
 	BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
 
 	/*
@@ -48,9 +51,14 @@ public class Juego {
 				System.out.println(p.getNombreReal());
 			}
 
+			
+			
 		} catch (Exception e) {
 			System.err.println(e);
 		}
+		
+		
+		
 	}
 
 	private void guardarPersonajesEnArchivo() {
@@ -133,6 +141,10 @@ public class Juego {
 
 					case 1:
 						System.out.println("metodo para combate  entre personaje y Ligas");
+						if(competidores.get(0).compareTo(competidores.get(1)) == 1)
+							System.out.println("Gana heroe");
+						else if(competidores.get(0).compareTo(competidores.get(1)) == -1)
+							System.out.println("Gana villano");
 						break;
 					case 2:
 						System.out.println("metodo para combate entre Ligas");
@@ -174,5 +186,5 @@ public class Juego {
 		System.out.println(opciones + "\n");
 		return Integer.parseInt(input.readLine());
 	}
-
+	
 }

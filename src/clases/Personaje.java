@@ -5,7 +5,7 @@ import java.util.HashMap;
 
 public abstract class Personaje implements Comparable<Personaje>{
 
-	private HashMap<String,Integer> caracteristicas = new HashMap<String,Integer>();
+	private HashMap<Atributo,Integer> caracteristicas = new HashMap<Atributo,Integer>();
 	
 	private String nombreReal;
 	private String nombrePersonaje;
@@ -17,17 +17,17 @@ public abstract class Personaje implements Comparable<Personaje>{
 		this.nombreReal = nombreReal;
 		this.nombrePersonaje = nombrePersonaje;
 		
-		caracteristicas.put("velocidad",velocidad);
-		caracteristicas.put("fuerza",fuerza);
-		caracteristicas.put("resistencia",resistencia);
-		caracteristicas.put("destreza",destreza);
+		caracteristicas.put(Atributo.VELOCIDAD,velocidad);
+		caracteristicas.put(Atributo.FUERZA,fuerza);
+		caracteristicas.put(Atributo.RESISTENCIA,resistencia);
+		caracteristicas.put(Atributo.DESTREZA,destreza);
 	}
 
-	public HashMap<String, Integer> getCaracteristicas() {
+	public HashMap<Atributo, Integer> getCaracteristicas() {
 		return caracteristicas;
 	}
 
-	public void setCaracteristicas(HashMap<String, Integer> caracteristicas) {
+	public void setCaracteristicas(HashMap<Atributo, Integer> caracteristicas) {
 		this.caracteristicas = caracteristicas;
 	}
 
@@ -52,9 +52,36 @@ public abstract class Personaje implements Comparable<Personaje>{
 		return this.nombrePersonaje + this.nombreReal;
 	}
 	
+	@Override
+	public int compareTo(Personaje other) {
+		Atributo atributo = Atributo.DESTREZA;
+		
+		for(int i = 0; i < 4; i++) {
+			if(this.getCaracteristicas().get(atributo).equals(other.getCaracteristicas().get(atributo))){
+				atributo = proximoValor(atributo);
+			}
+			else {
+				return this.getCaracteristicas().get(atributo).compareTo(other.getCaracteristicas().get(atributo));
+			}
+		}
+		
+		return 0;
+	}
 	
 	
+	private Atributo proximoValor(Atributo valorActual) {
+		
+		if(valorActual == Atributo.VELOCIDAD) 
+			return Atributo.FUERZA;
 	
+		else if(valorActual == Atributo.FUERZA) 
+			return Atributo.RESISTENCIA;
+	
+		else if(valorActual == Atributo.RESISTENCIA) 
+			return Atributo.DESTREZA;
+	
+		return Atributo.VELOCIDAD;
+	}
 	
 	
 }

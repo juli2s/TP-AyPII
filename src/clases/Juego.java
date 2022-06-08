@@ -6,20 +6,44 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.LinkedList;
+<<<<<<< HEAD
 
 
 public class Juego {
 	
+=======
+import java.util.PriorityQueue;
+import java.util.Scanner;
+
+
+public class Juego {
+>>>>>>> 03e0bbd6c83db721cfcd3035a713a10dedbc50bb
 	List<Personaje> competidores = new LinkedList<Personaje>();
 	BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
+	
+	private static Juego instancia;
+	
+	private HashMap<String,Personaje> heroes = new HashMap<String,Personaje>();
+	private HashMap<String,Personaje> villanos = new HashMap<String,Personaje>();
+	
+	
+	public static Juego getInstance(){
+		if (instancia == null)
+		{
+			instancia = new Juego();
+		}
+		return instancia;
+	}
 
 	/*
 	 * post inicializa el juego
 	 */
-
+    
 	private void cargarPersonajesDesdeArchivo() {
 		try {
 			FileReader archivo = new FileReader("./src/personajes.txt");
@@ -30,15 +54,20 @@ public class Juego {
 				String[] data = linea.split(",");
 
 				if (data[0].equals("Héroe")) {
-					Heroe h = new Heroe(data[1], data[2], Integer.parseInt(data[3].trim()),
+					Personaje h = new Personaje(data[1], data[2], Integer.parseInt(data[3].trim()),
 							Integer.parseInt(data[4].trim()), Integer.parseInt(data[5].trim()),
 							Integer.parseInt(data[6].trim()));
+					
+					heroes.put(data[1],h);
 					this.competidores.add(h);
+					
+					
 				}
 				if (data[0].equals("Villano")) {
-					Villano v = new Villano(data[1], data[2], Integer.parseInt(data[3].trim()),
+					Personaje v = new Personaje(data[1], data[2], Integer.parseInt(data[3].trim()),
 							Integer.parseInt(data[4].trim()), Integer.parseInt(data[5].trim()),
 							Integer.parseInt(data[6].trim()));
+					villanos.put(data[1],v);
 					this.competidores.add(v);
 				}
 
@@ -59,6 +88,53 @@ public class Juego {
 		
 		
 		
+<<<<<<< HEAD
+=======
+	}
+	
+    private void cargarPersonajesManualmente() {
+		
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		Scanner teclado = new Scanner(System.in);
+		
+		try {
+					
+			System.out.println("\n 1 - Heroe 2 - Villano \n");
+			int heroeOVillano = teclado.nextInt();
+			
+			System.out.println("Nombre real \n");
+			String nombreReal = br.readLine();
+			
+			System.out.println("Nombre de personaje \n");
+			String nombrePersonaje = br.readLine();
+			
+			System.out.println("Velocidad \n");
+			int velocidad = teclado.nextInt();
+			
+			System.out.println("Fuerza \n");
+			int fuerza = teclado.nextInt();
+			
+			System.out.println("Resistencia \n");
+			int resistencia = teclado.nextInt();
+			
+			System.out.println("Destreza \n");
+			int destreza = teclado.nextInt();
+						
+			if (heroeOVillano == 1) {
+				Personaje h = new Personaje(nombreReal, nombrePersonaje, velocidad, fuerza, resistencia, destreza);
+				this.heroes.put(nombrePersonaje,h);
+
+			} else if (heroeOVillano == 2) {
+				Personaje v = new Personaje(nombreReal, nombrePersonaje, velocidad, fuerza, resistencia,
+						destreza);
+				this.villanos.put(nombrePersonaje,v);
+			}
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+>>>>>>> 03e0bbd6c83db721cfcd3035a713a10dedbc50bb
 	}
 
 	private void guardarPersonajesEnArchivo() {
@@ -76,6 +152,7 @@ public class Juego {
 		}
 
 	}
+	
 
 	public void menu() throws NumberFormatException, IOException {
 		boolean salir = true;
@@ -95,7 +172,7 @@ public class Juego {
 						cargarPersonajesDesdeArchivo();
 						break;
 					case 2:
-						System.out.println("metodo para cargar personajes manualmente");
+						cargarPersonajesManualmente();
 						break;
 					case 3:
 						System.out.println("metodo para listar personajes");

@@ -20,12 +20,8 @@ public class Personaje implements Comparable<Personaje>{
 		
 		this.nombreReal = nombreReal;
 		this.nombrePersonaje = nombrePersonaje;
-		
-<<<<<<< HEAD
-=======
 		this.atributoInicial = Atributo.VELOCIDAD;
 		
->>>>>>> 03e0bbd6c83db721cfcd3035a713a10dedbc50bb
 		caracteristicas.put(Atributo.VELOCIDAD,velocidad);
 		caracteristicas.put(Atributo.FUERZA,fuerza);
 		caracteristicas.put(Atributo.RESISTENCIA,resistencia);
@@ -76,11 +72,8 @@ public class Personaje implements Comparable<Personaje>{
 	
 	@Override
 	public int compareTo(Personaje other) {
-<<<<<<< HEAD
-		Atributo atributo = Atributo.DESTREZA;
-=======
+
 		Atributo atributo = this.atributoInicial;
->>>>>>> 03e0bbd6c83db721cfcd3035a713a10dedbc50bb
 		
 		for(int i = 0; i < 4; i++) {
 			if(this.getCaracteristicas().get(atributo).equals(other.getCaracteristicas().get(atributo))){
@@ -94,12 +87,6 @@ public class Personaje implements Comparable<Personaje>{
 		return 0;
 	}
 	
-private Atributo proximoValor(Atributo valorActual) {
-		
-		if(valorActual == Atributo.VELOCIDAD) 
-			return Atributo.FUERZA;
-	
-<<<<<<< HEAD
 	private Atributo proximoValor(Atributo valorActual) {
 		
 		if(valorActual == Atributo.VELOCIDAD) 
@@ -108,11 +95,9 @@ private Atributo proximoValor(Atributo valorActual) {
 		else if(valorActual == Atributo.FUERZA) 
 			return Atributo.RESISTENCIA;
 	
-=======
 		else if(valorActual == Atributo.FUERZA) 
 			return Atributo.RESISTENCIA;
 	
->>>>>>> 03e0bbd6c83db721cfcd3035a713a10dedbc50bb
 		else if(valorActual == Atributo.RESISTENCIA) 
 			return Atributo.DESTREZA;
 	

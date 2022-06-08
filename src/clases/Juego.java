@@ -11,18 +11,12 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.LinkedList;
-<<<<<<< HEAD
-
-
-public class Juego {
-	
-=======
 import java.util.PriorityQueue;
 import java.util.Scanner;
 
 
 public class Juego {
->>>>>>> 03e0bbd6c83db721cfcd3035a713a10dedbc50bb
+
 	List<Personaje> competidores = new LinkedList<Personaje>();
 	BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
 	
@@ -88,8 +82,6 @@ public class Juego {
 		
 		
 		
-<<<<<<< HEAD
-=======
 	}
 	
     private void cargarPersonajesManualmente() {
@@ -134,7 +126,6 @@ public class Juego {
 			e.printStackTrace();
 		}
 
->>>>>>> 03e0bbd6c83db721cfcd3035a713a10dedbc50bb
 	}
 
 	private void guardarPersonajesEnArchivo() {

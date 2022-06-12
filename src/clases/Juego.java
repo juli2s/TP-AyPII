@@ -10,6 +10,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.LinkedList;
 import java.util.PriorityQueue;
 import java.util.Scanner;
@@ -130,10 +132,18 @@ public class Juego {
 	private void guardarPersonajesEnArchivo() {
 		try {
 			FileWriter writer = new FileWriter("./src/personajes_out.txt", true);
-			Iterator<Personaje> iterator = this.competidores.iterator();
-			while (iterator.hasNext()) {
+			Iterator<Map.Entry<String, Personaje>> iteratorHeroes = this.heroes.entrySet().iterator();
+			Iterator<Map.Entry<String, Personaje>> iteratorVillanos = this.villanos.entrySet().iterator();
+			while (iteratorHeroes.hasNext()) {
+				Map.Entry<String,Personaje> entrada = (Entry<String, Personaje>) iteratorHeroes.next();
+				Personaje p = entrada.getValue();
 				// System.out.println(iterator.next().toString());
-				writer.write(iterator.next().toString() + "\n");
+				writer.write(p.toString() + "\n");
+			}
+			while(iteratorVillanos.hasNext()) {
+				Map.Entry<String,Personaje> entrada = (Entry<String, Personaje>) iteratorVillanos.next();
+				Personaje p = entrada.getValue();
+				writer.write(p.toString() + "\n");
 			}
 			System.out.println("Guardado completo...");
 			writer.close();

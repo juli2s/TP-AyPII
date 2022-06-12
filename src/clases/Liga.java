@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-public class Liga {
+public class Liga implements Competidor{
     private HashMap<Atributo,Integer> caracteristicas = new HashMap<Atributo,Integer>();
 	
 	private String nombreLiga;

@@ -20,7 +20,6 @@ public class Personaje implements Comparable<Personaje>{
 		
 		this.nombreReal = nombreReal;
 		this.nombrePersonaje = nombrePersonaje;
-		
 		this.atributoInicial = Atributo.VELOCIDAD;
 		
 		caracteristicas.put(Atributo.VELOCIDAD,velocidad);
@@ -73,6 +72,7 @@ public class Personaje implements Comparable<Personaje>{
 	
 	@Override
 	public int compareTo(Personaje other) {
+
 		Atributo atributo = this.atributoInicial;
 		
 		for(int i = 0; i < 4; i++) {
@@ -87,10 +87,13 @@ public class Personaje implements Comparable<Personaje>{
 		return 0;
 	}
 	
-private Atributo proximoValor(Atributo valorActual) {
+	private Atributo proximoValor(Atributo valorActual) {
 		
 		if(valorActual == Atributo.VELOCIDAD) 
 			return Atributo.FUERZA;
+	
+		else if(valorActual == Atributo.FUERZA) 
+			return Atributo.RESISTENCIA;
 	
 		else if(valorActual == Atributo.FUERZA) 
 			return Atributo.RESISTENCIA;

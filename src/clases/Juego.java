@@ -15,6 +15,7 @@ import java.util.Scanner;
 
 
 public class Juego {
+
 	List<Personaje> competidores = new LinkedList<Personaje>();
 	BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
 	Menu menu = new Menu();

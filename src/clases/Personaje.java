@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 
 
-public class Personaje implements Comparable<Personaje>{
+public class Personaje implements Comparable<Personaje>, Competidor{
 
 	private HashMap<Atributo,Integer> caracteristicas = new HashMap<Atributo,Integer>();
 	
@@ -47,6 +47,10 @@ public class Personaje implements Comparable<Personaje>{
 	public String getNombrePersonaje() {
 		return nombrePersonaje;
 	}
+	
+	public String nombreCompetidor() {
+		return nombrePersonaje;
+	}
 
 	public void setNombrePersonaje(String nombrePersonaje) {
 		this.nombrePersonaje = nombrePersonaje;
@@ -65,13 +69,36 @@ public class Personaje implements Comparable<Personaje>{
 		return esGanador;
 	}
 	
+	public boolean pertenece(Personaje personaje){
+		return personaje.nombreCompetidor() == personaje.nombreCompetidor();
+		
+	}
+	
 	@Override
 	public String toString() {
 		return this.nombrePersonaje + this.nombreReal;
 	}
 	
+	
 	@Override
 	public int compareTo(Personaje other) {
+
+		Atributo atributo = this.atributoInicial;
+		
+		for(int i = 0; i < 4; i++) {
+			if(this.getCaracteristicas().get(atributo).equals(other.getCaracteristicas().get(atributo))){
+				atributo = proximoValor(atributo);
+			}
+			else {
+				return this.getCaracteristicas().get(atributo).compareTo(other.getCaracteristicas().get(atributo));
+			}
+		}
+		
+		return 0;
+	}
+	
+	
+	public int compareTo(Competidor other) {
 
 		Atributo atributo = this.atributoInicial;
 		

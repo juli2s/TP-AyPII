@@ -11,8 +11,8 @@ public class Main {
 		try {
 			
 			Juego j = Juego.getInstance();
-		
-		} catch (NumberFormatException e) {
+			j.iniciarMenu();
+		} catch (NumberFormatException | IOException e) {
 			
 			e.printStackTrace();
 		}

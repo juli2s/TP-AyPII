@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -16,6 +17,7 @@ import java.util.Scanner;
 
 public class Juego {
 
+	
 	List<Personaje> competidores = new LinkedList<Personaje>();
 	BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
 	Menu menu = new Menu();
@@ -38,14 +40,6 @@ public class Juego {
 	 * post inicializa el juego
 	 */
 	
-	private Juego () {
-		try {
-			menu.generarMenu(this);
-		} catch (NumberFormatException | IOException e) {
-			
-			e.printStackTrace();
-		}
-	}
     
 	 void cargarPersonajesDesdeArchivo() {
 		try {
@@ -161,7 +155,60 @@ public class Juego {
 
 	}
 	
-
+	 void listarPersonajesPorMultiplesCaracteristicas() {
+		Atributo atributo1,atributo2;
+		 System.out.println("CARACTERISTICAS: listado de caracteristicas");
+		 
+		try {
+			int attr1 =  mostrarMensaje("ingrese el primer atributo");
+			int attr2 =  mostrarMensaje("ingrese el primer atributo");
+			if(attr1 == attr2) {
+				attr2 =  mostrarMensaje("Debe elegir una caracteristica distinta");
+			}
+			
+			atributo1 = seleccionarAtributo(attr1);
+			atributo2 = seleccionarAtributo(attr2);
+			Comparator<Personaje> comp = new ComparadorPorAtributo(atributo1,atributo2);
+			
+			this.competidores.sort(comp);
+		} catch (NumberFormatException | IOException e) {
+			System.err.println("Opcion ingresada invalida");
+		}
+		
+		 Comparator<Personaje> ComparadorPorAtributo = new ComparadorPorAtributo(null, null);
+		this.competidores.sort(ComparadorPorAtributo);
+		for(Personaje p : this.competidores) {
+			System.out.println(p.toString());
+		}
+	 }
+	 
+	 public void iniciarMenu() throws NumberFormatException, IOException {
+		 menu.generarMenu(this);
+	 }
+	
+	 private int mostrarMensaje(String opciones) throws NumberFormatException, IOException {
+			System.out.println(opciones + "\n");
+			return Integer.parseInt(input.readLine());
+		}
+	 
+	 public Atributo seleccionarAtributo(int valor) {
+		 Atributo atributo = null;
+		 switch (valor) {
+			case 1:
+				atributo = Atributo.VELOCIDAD;
+				break;
+			case 2:
+				atributo = Atributo.FUERZA;
+				break;
+			case 3:
+				atributo = Atributo.RESISTENCIA;
+				break;
+			case 4:
+				atributo = Atributo.DESTREZA;
+				break;
+			}
+		 return atributo;
+	 }
 	
 	
 }

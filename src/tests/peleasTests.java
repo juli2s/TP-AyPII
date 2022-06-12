@@ -1,7 +1,11 @@
-package clases;
+package tests;
 
 import org.junit.Assert;
 import org.junit.Test;
+
+import clases.Atributo;
+import clases.Juego;
+import clases.Personaje;
 
 public class peleasTests {
 	@Test
@@ -60,7 +64,7 @@ public class peleasTests {
 	   jugador1 = new Personaje("Romi", "SuperRomi", 50 ,10 ,40, 70);
 	   jugador2 = new Personaje("Fer", "SuperFer", 60 ,20 ,40, 60);
 	   
-	   Juego juego =  Juego.getInstance();
+	   //Juego juego =  Juego.getInstance();
 	   
 	   boolean esGanador = jugador1.esGanador(Atributo.RESISTENCIA, jugador2);
 	   

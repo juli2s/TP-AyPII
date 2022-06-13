@@ -56,13 +56,14 @@ public class Personaje implements Comparable<Personaje>, Competidor{
 		this.nombrePersonaje = nombrePersonaje;
 	}
 	
-	public boolean esGanador(Atributo atributo, Personaje contrincante) {
+	public boolean esGanador(Atributo atributo, Competidor contrincante) {
 		//habria que chequear que los personajes pertenezcan al juego?
 		this.atributoInicial = atributo;
 		boolean esGanador = false;
 		
 		if (this.compareTo(contrincante) > 0 )
 		{
+			System.out.println(this.compareTo(contrincante));
 			esGanador = true;
 		}
 		
@@ -99,6 +100,7 @@ public class Personaje implements Comparable<Personaje>, Competidor{
 	
 	
 	public int compareTo(Competidor other) {
+
 
 		Atributo atributo = this.atributoInicial;
 		

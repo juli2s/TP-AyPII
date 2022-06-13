@@ -19,6 +19,7 @@ public class Liga implements Competidor{
 		// faltan los try catch
 		this.nombreLiga = nombreLiga;
 		this.integrantes = integrantes;
+		this.atributoInicial = Atributo.VELOCIDAD;
 		
 		int sumaVelocidad = 0;
 		int sumaFuerza = 0;
@@ -27,10 +28,10 @@ public class Liga implements Competidor{
 		int cantIntegrantes = integrantes.size();
 		
 		for (Competidor integrante: integrantes) {
-			sumaVelocidad = integrante.getCaracteristicas().get(Atributo.VELOCIDAD);
-			sumaFuerza = integrante.getCaracteristicas().get(Atributo.FUERZA);
-			sumaResistencia = integrante.getCaracteristicas().get(Atributo.RESISTENCIA);
-			sumaDestreza = integrante.getCaracteristicas().get(Atributo.DESTREZA);
+			sumaVelocidad = sumaVelocidad + integrante.getCaracteristicas().get(Atributo.VELOCIDAD);
+			sumaFuerza = sumaFuerza + integrante.getCaracteristicas().get(Atributo.FUERZA);
+			sumaResistencia =sumaResistencia+ integrante.getCaracteristicas().get(Atributo.RESISTENCIA);
+			sumaDestreza = sumaDestreza + integrante.getCaracteristicas().get(Atributo.DESTREZA);
 			
 		}
 		
@@ -86,9 +87,9 @@ public class Liga implements Competidor{
     }
     
 
-	public boolean esGanador(Atributo atributo, Personaje contrincante) {
+	public boolean esGanador(Atributo atributo, Competidor contrincante) {
 		//habria que chequear que los personajes pertenezcan al juego?
-		//this.atributoInicial = atributo;
+		this.atributoInicial = atributo;
 		boolean esGanador = false;
 		
 		if (this.compareTo(contrincante) > 0 )

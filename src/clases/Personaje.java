@@ -1,12 +1,10 @@
 package clases;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
+import java.util.Objects;
 
 
-public class Personaje implements Comparable<Personaje>, Competidor{
+public class Personaje implements Competidor{
 
 	private HashMap<Atributo,Integer> caracteristicas = new HashMap<Atributo,Integer>();
 	
@@ -59,15 +57,8 @@ public class Personaje implements Comparable<Personaje>, Competidor{
 	public boolean esGanador(Atributo atributo, Competidor contrincante) {
 		//habria que chequear que los personajes pertenezcan al juego?
 		this.atributoInicial = atributo;
-		boolean esGanador = false;
-		
-		if (this.compareTo(contrincante) > 0 )
-		{
-			System.out.println(this.compareTo(contrincante));
-			esGanador = true;
-		}
-		
-		return esGanador;
+		return this.compareTo(contrincante) > 0;
+
 	}
 	
 	public boolean pertenece(Personaje personaje){
@@ -81,8 +72,9 @@ public class Personaje implements Comparable<Personaje>, Competidor{
 	}
 	
 	
-	@Override
-	public int compareTo(Personaje other) {
+	
+	
+	public int compareTo(Competidor other) {
 
 		Atributo atributo = this.atributoInicial;
 		
@@ -98,22 +90,9 @@ public class Personaje implements Comparable<Personaje>, Competidor{
 		return 0;
 	}
 	
-	
-	public int compareTo(Competidor other) {
-
-
-		Atributo atributo = this.atributoInicial;
-		
-		for(int i = 0; i < 4; i++) {
-			if(this.getCaracteristicas().get(atributo).equals(other.getCaracteristicas().get(atributo))){
-				atributo = proximoValor(atributo);
-			}
-			else {
-				return this.getCaracteristicas().get(atributo).compareTo(other.getCaracteristicas().get(atributo));
-			}
-		}
-		
-		return 0;
+	@Override
+	public int hashCode() {
+		return Objects.hash(atributoInicial);
 	}
 	
 	private Atributo proximoValor(Atributo valorActual) {
@@ -124,8 +103,6 @@ public class Personaje implements Comparable<Personaje>, Competidor{
 		else if(valorActual == Atributo.FUERZA) 
 			return Atributo.RESISTENCIA;
 	
-		else if(valorActual == Atributo.FUERZA) 
-			return Atributo.RESISTENCIA;
 	
 		else if(valorActual == Atributo.RESISTENCIA) 
 			return Atributo.DESTREZA;

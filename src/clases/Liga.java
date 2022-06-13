@@ -4,8 +4,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 
 public class Liga implements Competidor{
     private HashMap<Atributo,Integer> caracteristicas = new HashMap<Atributo,Integer>();
@@ -14,62 +12,34 @@ public class Liga implements Competidor{
 	private Atributo atributoInicial;
 	private List<Competidor> integrantes = new LinkedList();
 	
+	
 	public Liga(String nombreLiga,List<Competidor> integrantes) {
 		
 		// faltan los try catch
 		this.nombreLiga = nombreLiga;
 		this.integrantes = integrantes;
 		this.atributoInicial = Atributo.VELOCIDAD;
+		calcularAtributos();
 		
-		int sumaVelocidad = 0;
-		int sumaFuerza = 0;
-		int sumaResistencia = 0;
-		int sumaDestreza = 0;
-		int cantIntegrantes = integrantes.size();
-		
-		for (Competidor integrante: integrantes) {
-			sumaVelocidad = sumaVelocidad + integrante.getCaracteristicas().get(Atributo.VELOCIDAD);
-			sumaFuerza = sumaFuerza + integrante.getCaracteristicas().get(Atributo.FUERZA);
-			sumaResistencia =sumaResistencia+ integrante.getCaracteristicas().get(Atributo.RESISTENCIA);
-			sumaDestreza = sumaDestreza + integrante.getCaracteristicas().get(Atributo.DESTREZA);
-			
-		}
-		
-		caracteristicas.put(Atributo.VELOCIDAD,sumaVelocidad/cantIntegrantes);
-		caracteristicas.put(Atributo.FUERZA,sumaFuerza/cantIntegrantes);
-		caracteristicas.put(Atributo.RESISTENCIA,sumaResistencia/cantIntegrantes);
-		caracteristicas.put(Atributo.DESTREZA,sumaDestreza/cantIntegrantes);
 	}
+	
 	
 	public HashMap<Atributo, Integer> getCaracteristicas() {
 		return caracteristicas;
 	}
 	
+	
     public boolean agregarCompetidor(Competidor competidor){
     	//falta ver que aun no pertenezca
     	
     	boolean inserto = true;
-    	
-    	int velocidad = 0;
-		int fuerza = 0;
-		int resistencia = 0;
-		int destreza = 0;
-		int cantIntegrantes = integrantes.size() + 1;
-		
-		
-	    velocidad = this.getCaracteristicas().get(Atributo.VELOCIDAD) + competidor.getCaracteristicas().get(Atributo.VELOCIDAD);
-		fuerza = this.getCaracteristicas().get(Atributo.FUERZA) + competidor.getCaracteristicas().get(Atributo.FUERZA);
-		resistencia = this.getCaracteristicas().get(Atributo.RESISTENCIA) + competidor.getCaracteristicas().get(Atributo.RESISTENCIA);
-		destreza = this.getCaracteristicas().get(Atributo.DESTREZA) + competidor.getCaracteristicas().get(Atributo.DESTREZA);
-		
-		caracteristicas.put(Atributo.VELOCIDAD,velocidad/cantIntegrantes);
-		caracteristicas.put(Atributo.FUERZA,fuerza/cantIntegrantes);
-		caracteristicas.put(Atributo.RESISTENCIA,resistencia/cantIntegrantes);
-		caracteristicas.put(Atributo.DESTREZA,destreza/cantIntegrantes);
+		integrantes.add(competidor);
+		calcularAtributos();
 		
 		return inserto;
 		
 	}
+    
     
     public String nombreCompetidor() {
 		return nombreLiga;
@@ -89,17 +59,11 @@ public class Liga implements Competidor{
 
 	public boolean esGanador(Atributo atributo, Competidor contrincante) {
 		//habria que chequear que los personajes pertenezcan al juego?
-		this.atributoInicial = atributo;
-		boolean esGanador = false;
-		
-		if (this.compareTo(contrincante) > 0 )
-		{
-			esGanador = true;
-		}
-		
-		return esGanador;
+		this.atributoInicial = atributo;				
+		return this.compareTo(contrincante) > 0;
 	}
     
+	
 	public int compareTo(Competidor other) {
 
 		Atributo atributo = this.atributoInicial;
@@ -133,6 +97,23 @@ public class Liga implements Competidor{
 		return Atributo.VELOCIDAD;
 	}
 
-
+	private void calcularAtributos(){
+		
+		caracteristicas.put(Atributo.VELOCIDAD, calcularSumaDeAtributos(Atributo.VELOCIDAD)/integrantes.size());
+		caracteristicas.put(Atributo.FUERZA, calcularSumaDeAtributos(Atributo.FUERZA)/integrantes.size());
+		caracteristicas.put(Atributo.RESISTENCIA, calcularSumaDeAtributos(Atributo.RESISTENCIA)/integrantes.size());
+		caracteristicas.put(Atributo.DESTREZA, calcularSumaDeAtributos(Atributo.DESTREZA)/integrantes.size());		
+	
+	}
+	
+	private Integer calcularSumaDeAtributos(Atributo atributo) {
+		Integer suma = 0;
+		
+		for (Competidor integrante: integrantes) {
+			suma += integrante.getCaracteristicas().get(atributo);
+		}
+		
+		return suma;
+	}
 
 }

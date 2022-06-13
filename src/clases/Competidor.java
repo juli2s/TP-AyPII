@@ -2,7 +2,7 @@ package clases;
 
 import java.util.HashMap;
 
-public interface Competidor {
+public interface Competidor extends Comparable<Competidor>{
 	
 	
 	//public boolean esGanador(Atributo atributo, Competidor contrincante);

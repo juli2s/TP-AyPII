@@ -156,59 +156,42 @@ public class Juego {
 	}
 	
 	 void listarPersonajesPorMultiplesCaracteristicas() {
-		Atributo atributo1,atributo2;
-		 System.out.println("CARACTERISTICAS: listado de caracteristicas");
+		Atributo atributo1;
+		Atributo atributo2;
+		
+     	 System.out.println("CARACTERISTICAS: listado de caracteristicas");
 		 
 		try {
-			int attr1 =  mostrarMensaje("ingrese el primer atributo");
-			int attr2 =  mostrarMensaje("ingrese el primer atributo");
-			if(attr1 == attr2) {
-				attr2 =  mostrarMensaje("Debe elegir una caracteristica distinta");
+			String attr1 = mostrarMensaje("Primer atributo");
+			String attr2 = mostrarMensaje("Segundo atributo");
+			
+			atributo1 =  Atributo.valueOf(attr1.toUpperCase());
+			atributo2 =  Atributo.valueOf(attr2.toUpperCase());
+			if(atributo1 == atributo2) {
+				atributo2 =  Atributo.valueOf(mostrarMensaje("Debe elegir una caracteristica distinta"));
 			}
 			
-			atributo1 = seleccionarAtributo(attr1);
-			atributo2 = seleccionarAtributo(attr2);
-			Comparator<Personaje> comp = new ComparadorPorAtributo(atributo1,atributo2);
+			Comparator<Personaje> comp = new ComparadorPorAtributo(atributo1, atributo2);
 			
 			this.competidores.sort(comp);
 		} catch (NumberFormatException | IOException e) {
 			System.err.println("Opcion ingresada invalida");
 		}
 		
-		 Comparator<Personaje> ComparadorPorAtributo = new ComparadorPorAtributo(null, null);
-		this.competidores.sort(ComparadorPorAtributo);
 		for(Personaje p : this.competidores) {
 			System.out.println(p.toString());
 		}
 	 }
 	 
+	 
 	 public void iniciarMenu() throws NumberFormatException, IOException {
 		 menu.generarMenu(this);
 	 }
 	
-	 private int mostrarMensaje(String opciones) throws NumberFormatException, IOException {
-			System.out.println(opciones + "\n");
-			return Integer.parseInt(input.readLine());
-		}
 	 
-	 public Atributo seleccionarAtributo(int valor) {
-		 Atributo atributo = null;
-		 switch (valor) {
-			case 1:
-				atributo = Atributo.VELOCIDAD;
-				break;
-			case 2:
-				atributo = Atributo.FUERZA;
-				break;
-			case 3:
-				atributo = Atributo.RESISTENCIA;
-				break;
-			case 4:
-				atributo = Atributo.DESTREZA;
-				break;
-			}
-		 return atributo;
-	 }
-	
+	 private String mostrarMensaje(String opciones) throws NumberFormatException, IOException {
+			System.out.println(opciones + "\n");
+			return input.readLine();
+	}
 	
 }

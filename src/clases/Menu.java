@@ -91,7 +91,7 @@ public class Menu {
 						System.out.println("metodo para reporte de personajes o ligas que venzan a otro");
 						break;
 					case 2:
-						System.out.println("metodo para reporte de personajes por multiples caracteristicas");
+						juego.listarPersonajesPorMultiplesCaracteristicas();
 						break;
 					case 3:
 						opc = 3;

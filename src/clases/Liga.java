@@ -19,7 +19,7 @@ public class Liga implements Competidor{
 		this.nombreLiga = nombreLiga;
 		this.integrantes = integrantes;
 		this.atributoInicial = Atributo.VELOCIDAD;
-		calcularAtributos();
+		//calcularAtributos();
 		
 	}
 	
@@ -114,6 +114,12 @@ public class Liga implements Competidor{
 		}
 		
 		return suma;
+	}
+	// agrego metodo para saber cuantos competidores tiene una liga.
+	
+	public int cantidadDeCompetidores() {
+		return this.integrantes.size();
+		
 	}
 
 }

@@ -23,7 +23,7 @@ public class Menu {
 							+ "3- Listar personajes \n" + "4- Guardar personajes en archivo\n" + "5- atrás\n")) {
 
 					case 1:
-						juego.cargarPersonajesDesdeArchivo();
+						juego.cargarPersonajesDesdeArchivo("./src/personajes.txt");
 						break;
 					case 2:
 						juego.cargarPersonajesManualmente();
@@ -48,7 +48,7 @@ public class Menu {
 							+ "3- Listar Ligas \n" + "4- Guardar Ligas en archivo \n" + "5- atrás\n")) {
 
 					case 1:
-						System.out.println("Metodo para cargar Ligas desde archivo");
+						juego.cargarLigaDesdeArchivo("./src/ligas.txt");
 						break;
 					case 2:
 						System.out.println("metodo para cargar Ligas manualmente");
@@ -91,7 +91,7 @@ public class Menu {
 						System.out.println("metodo para reporte de personajes o ligas que venzan a otro");
 						break;
 					case 2:
-						System.out.println("metodo para reporte de personajes por multiples caracteristicas");
+						juego.listarPersonajesPorMultiplesCaracteristicas();
 						break;
 					case 3:
 						opc = 3;

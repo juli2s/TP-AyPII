@@ -212,16 +212,12 @@ public class LigasTests {
 	   listaLiga2.add(jugador5);
 	   listaLiga2.add(liga1);
 	   
-<<<<<<< HEAD
-	   
-=======
 	   System.out.println("llego");
 	   System.out.println(liga1.getCaracteristicas().get(Atributo.FUERZA));
        boolean esGanador = jugador1.esGanador(Atributo.FUERZA, liga1);
 	   
       
 	   System.out.println(esGanador);
->>>>>>> 5bf71234eeb8cc1ee4335dc2a36202628520dc8f
 	   
 	   Assert.assertFalse(jugador1.esGanador(Atributo.FUERZA, liga1));
 	}

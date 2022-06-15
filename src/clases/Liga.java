@@ -33,6 +33,10 @@ public class Liga implements Competidor{
 		return caracteristicas;
 	}
 	
+	public String getNombre() {
+		return nombreLiga;
+	}
+	
 	
     public void agregarCompetidor(Competidor competidor){
     	//falta ver que aun no pertenezca
@@ -46,11 +50,12 @@ public class Liga implements Competidor{
 		return nombreLiga;
 	}
    
-    public boolean pertenece( Personaje personaje){
+    public boolean pertenece(Competidor personaje){
     	boolean pertenece = false;
     	
     	for (Competidor integrante: integrantes) {
-    		pertenece =  pertenece || integrante.pertenece(personaje);
+    		if(personaje.getNombre().equals(integrante.getNombre()))
+    			pertenece = true;
 			
 		}
     	

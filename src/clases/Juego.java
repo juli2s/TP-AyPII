@@ -75,7 +75,7 @@ public class Juego {
 				String[] data = linea.split(",");
 
 				if (data[0].equals("Héroe")) {
-					Personaje h = new Personaje(data[1], data[2], Integer.parseInt(data[3].trim()),
+					Personaje h = new Personaje(data[1].trim(), data[2].trim(), Integer.parseInt(data[3].trim()),
 							Integer.parseInt(data[4].trim()), Integer.parseInt(data[5].trim()),
 							Integer.parseInt(data[6].trim()));
 
@@ -84,7 +84,7 @@ public class Juego {
 
 				}
 				if (data[0].equals("Villano")) {
-					Personaje v = new Personaje(data[1], data[2], Integer.parseInt(data[3].trim()),
+					Personaje v = new Personaje(data[1].trim(), data[2].trim(), Integer.parseInt(data[3].trim()),
 							Integer.parseInt(data[4].trim()), Integer.parseInt(data[5].trim()),
 							Integer.parseInt(data[6].trim()));
 					
@@ -204,18 +204,17 @@ public class Juego {
 	 * pre: no se puede crear una liga ya existente ni con personajes que no existan
 	 * en el archivo de personajes
 	 */
-	private void cargarLigas(String[] data)throws PerteneceALigaException, CompetidorNoPerteneceAlJuego, LigaYaExiste
-	{
-		String nombreLiga = data[0];
+	private void cargarLigas(String[] data)throws PerteneceALigaException, CompetidorNoPerteneceAlJuego, LigaYaExiste{
+		String nombreLiga = data[0].trim();
 		HashMap<String, Competidor> ligaAAgregar = null;
 		HashMap<String, Personaje> tipoAchequear = null;
 		List<Competidor> listaCompetidores = new LinkedList();
 		Liga liga;
 		Competidor competidor = null;
-		String nombreCompetidor = data[1];
-		
-		if(ligaDeHeroes.containsKey(nombreLiga) || ligaDeVillanos.containsKey(nombreLiga) ) 
-			throw new LigaYaExiste("La liga ya existe");
+		String nombreCompetidor = data[1].trim();
+
+		verificarExistencia(nombreLiga);
+		verificarExistencia(nombreCompetidor);
 		
 		if(heroes.containsKey(nombreCompetidor) || ligaDeHeroes.containsKey(nombreCompetidor)){
 				ligaAAgregar = ligaDeHeroes;
@@ -227,22 +226,20 @@ public class Juego {
 				tipoAchequear = villanos;
 		}
 			
-		if (ligaAAgregar == null) throw new CompetidorNoPerteneceAlJuego("El competidor no pertenece al Juego");
 			/** Agrega todos los heroes que vengan en la linea de esta liga**/
 			for (int i = 1; i < data.length; i++) {
 				
 				nombreCompetidor = data[i];
 			
 				
-				if(tipoAchequear.containsKey(nombreCompetidor)) {
-					competidor = tipoAchequear.get(nombreCompetidor);
-					for (String key : ligaAAgregar.keySet()) {
-						if (ligaAAgregar.get(key).pertenece(tipoAchequear.get(nombreCompetidor))){
-							
-							throw new PerteneceALigaException("El competidor ya pertenece a una liga");
-						}
+				competidor = tipoAchequear.get(nombreCompetidor);
+				for (String key : ligaAAgregar.keySet()) {
+					if (ligaAAgregar.get(key).pertenece(competidor)){
+						
+						throw new PerteneceALigaException("El competidor ya pertenece a una liga");
 					}
 				}
+				
 					
 				if(ligaAAgregar.containsKey(nombreCompetidor)) 
 					competidor = ligaAAgregar.get(nombreCompetidor); //SI es una liga, tiene que estar ya cargada tambien
@@ -289,8 +286,43 @@ public class Juego {
 		
 		
 	}
+	
+	public String pelear() throws CompetidorNoPerteneceAlJuego, LigaYaExiste{
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		String ganador = "El ganador es: ";
+		
+		try {	
+			System.out.println("Nombre de retador\n");
+			String nombreRetador = br.readLine();
+			verificarExistencia(nombreRetador);
+			
+			System.out.println("Nombre de contrincante\n");
+			String nombreContrincante = br.readLine();
+			verificarExistencia(nombreContrincante);
 
-	public void iniciarMenu() throws NumberFormatException, IOException {
+			System.out.println("Indique atributo\n");
+			String attr = br.readLine().toUpperCase();
+			Atributo atributo = Atributo.valueOf(attr);
+			
+			if(obtenerDeUnBando(nombreRetador).esGanador(atributo, obtenerDeUnBando(nombreContrincante)))
+				ganador += nombreRetador;
+			else if(obtenerDeUnBando(nombreRetador).esGanador(atributo, obtenerDeUnBando(nombreContrincante)))
+				ganador += nombreContrincante;
+			else
+				ganador = "Empate";
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		
+		
+		return ganador;
+	}
+
+	
+	
+	public void iniciarMenu() throws NumberFormatException, IOException, CompetidorNoPerteneceAlJuego {
 		menu.generarMenu(this);
 	}
 
@@ -298,5 +330,19 @@ public class Juego {
 		System.out.println(opciones + "\n");
 		return input.readLine();
 	}
-
+	
+	private Competidor obtenerDeUnBando(String nombre) {
+		if(heroes.containsKey(nombre))
+			return heroes.get(nombre);
+	
+		return villanos.get(nombre);
+	}
+	
+	private void verificarExistencia(String nombreCompetidor)throws CompetidorNoPerteneceAlJuego, LigaYaExiste {
+		if(!heroes.containsKey(nombreCompetidor) && !villanos.containsKey(nombreCompetidor))
+			throw new CompetidorNoPerteneceAlJuego("El competidor no pertenece al Juego");
+		if(ligaDeHeroes.containsKey(nombreCompetidor) || ligaDeVillanos.containsKey(nombreCompetidor))
+			throw new LigaYaExiste("La liga ya existe");
+		
+	}
 }

@@ -42,11 +42,7 @@ public class Personaje implements Competidor{
 		this.nombreReal = nombreReal;
 	}
 
-	public String getNombrePersonaje() {
-		return nombrePersonaje;
-	}
-	
-	public String nombreCompetidor() {
+	public String getNombre() {
 		return nombrePersonaje;
 	}
 
@@ -61,11 +57,12 @@ public class Personaje implements Competidor{
 
 	}
 	
-	public boolean pertenece(Personaje personaje){
+	
+	public boolean pertenece(Competidor personaje){
 		//return this.nombreCompetidor() == personaje.nombreCompetidor();
 		boolean res;
 		
-		res = this.nombreCompetidor().equals( personaje.nombreCompetidor());
+		res = this.getNombre().equals( personaje.getNombre());
 		
 		return res;
 		

@@ -2,11 +2,11 @@ package clases;
 
 
 import java.io.IOException;
-
+import excepciones.CompetidorNoPerteneceAlJuego;
 
 public class Main {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws CompetidorNoPerteneceAlJuego{
 
 		try {
 			

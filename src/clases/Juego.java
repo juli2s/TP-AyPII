@@ -66,21 +66,21 @@ public class Juego {
 				String[] data = linea.split(",");
 
 				if (data[0].equals("Héroe")) {
-					Personaje h = new Personaje(data[1], data[2], Integer.parseInt(data[3].trim()),
+					Personaje h = new Personaje(data[1].trim(), data[2].trim(), Integer.parseInt(data[3].trim()),
 							Integer.parseInt(data[4].trim()), Integer.parseInt(data[5].trim()),
 							Integer.parseInt(data[6].trim()));
 
-					heroes.put(data[2], h); //creo que la key tiene que ser el nmbre de personaje porque es es el que se pasa en ligas.in
+					heroes.put(data[2].trim(), h); //creo que la key tiene que ser el nmbre de personaje porque es es el que se pasa en ligas.in
 					this.competidores.add(h);
 
 				}
 				if (data[0].equals("Villano")) {
-					Personaje v = new Personaje(data[1], data[2], Integer.parseInt(data[3].trim()),
+					Personaje v = new Personaje(data[1].trim(), data[2].trim(), Integer.parseInt(data[3].trim()),
 							Integer.parseInt(data[4].trim()), Integer.parseInt(data[5].trim()),
 							Integer.parseInt(data[6].trim()));
 					
 					//System.out.println(data[2]);
-					villanos.put(data[2], v);
+					villanos.put(data[2].trim(), v);
 					this.competidores.add(v);
 				}
 
@@ -204,13 +204,13 @@ public class Juego {
 	 */
 	private void cargarLigas(String[] data)throws PerteneceALigaException, CompetidorNoPerteneceAlJuego, LigaYaExiste
 	{
-		String nombreLiga = data[0];
+		String nombreLiga = data[0].trim();
 		HashMap<String, Competidor> ligaAAgregar = null;
 		HashMap<String, Personaje> tipoAchequear = null;
 		List<Competidor> listaCompetidores = new LinkedList();
 		Liga liga;
 		Competidor competidor = null;
-		String nombreCompetidor = data[1];
+		String nombreCompetidor = data[1].trim();
 		
 		if ( !(ligaDeHeroes.containsKey(nombreLiga)) && !(ligaDeVillanos.containsKey(nombreLiga)) ) {
 			
@@ -220,7 +220,8 @@ public class Juego {
 				tipoAchequear = heroes; 
 			}
 			if(villanos.containsKey(nombreCompetidor) || ligaDeVillanos.containsKey(nombreCompetidor))
-			{
+			{   
+				//System.out.println(nombreCompetidor + " ligavillano");
 				ligaAAgregar = ligaDeVillanos;
 				tipoAchequear = villanos;
 			}
@@ -229,15 +230,17 @@ public class Juego {
 			/** Agrega todos los heroes que vengan en la linea de esta liga**/
 			for (int i = 1; i < data.length; i++) {
 				
-				nombreCompetidor = data[i];
+				nombreCompetidor = data[i].trim();
 			
 				
 				if(tipoAchequear.containsKey(nombreCompetidor)) {
 					competidor = tipoAchequear.get(nombreCompetidor);
 					for (String key : ligaAAgregar.keySet()) {
 						if (ligaAAgregar.get(key).pertenece(tipoAchequear.get(nombreCompetidor))){
+							Liga ligaM = (Liga) ligaAAgregar.get(key);
 							
 							throw new PerteneceALigaException("El competidor ya pertenece a una liga");
+							
 						}
 					}
 				}
@@ -248,7 +251,7 @@ public class Juego {
 				if (competidor == null) throw new CompetidorNoPerteneceAlJuego("El competidor no pertenece al Juego"); 
 				listaCompetidores.add(competidor);
 			}
-			System.out.println(nombreLiga);
+			
 			liga = new Liga(nombreLiga, listaCompetidores);
 			ligaAAgregar.put(nombreLiga, liga);
 		}else

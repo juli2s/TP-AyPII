@@ -19,7 +19,7 @@ public class Liga implements Competidor{
 		this.nombreLiga = nombreLiga;
 		this.integrantes = integrantes;
 		this.atributoInicial = Atributo.VELOCIDAD;
-		//calcularAtributos();
+		calcularAtributos();
 		
 	}
 	

@@ -15,6 +15,8 @@ import java.util.LinkedList;
 import java.util.Scanner;
 
 import excepciones.PerteneceALigaException;
+import excepciones.CompetidorNoPerteneceAlJuego;
+import excepciones.LigaYaExiste;
 
 public class Juego {
 
@@ -33,6 +35,13 @@ public class Juego {
 			instancia = new Juego();
 		}
 		return instancia;
+	}
+	
+	public void resetearJugadores(){
+		 heroes = new HashMap<String, Personaje>();
+		 villanos = new HashMap<String, Personaje>();
+		 ligaDeHeroes = new HashMap<String, Competidor>();
+		 ligaDeVillanos = new HashMap<String, Competidor>();
 	}
 
 	/*
@@ -61,7 +70,7 @@ public class Juego {
 							Integer.parseInt(data[4].trim()), Integer.parseInt(data[5].trim()),
 							Integer.parseInt(data[6].trim()));
 
-					heroes.put(data[1], h);
+					heroes.put(data[2], h); //creo que la key tiene que ser el nmbre de personaje porque es es el que se pasa en ligas.in
 					this.competidores.add(h);
 
 				}
@@ -69,7 +78,9 @@ public class Juego {
 					Personaje v = new Personaje(data[1], data[2], Integer.parseInt(data[3].trim()),
 							Integer.parseInt(data[4].trim()), Integer.parseInt(data[5].trim()),
 							Integer.parseInt(data[6].trim()));
-					villanos.put(data[1], v);
+					
+					//System.out.println(data[2]);
+					villanos.put(data[2], v);
 					this.competidores.add(v);
 				}
 
@@ -178,109 +189,106 @@ public class Juego {
 			System.out.println(p.toString());
 		}
 	}
+    
+	public HashMap<String, Personaje> getHeroes() {
+		return heroes;
+	}
+
+	public HashMap<String, Personaje> getVillanos() {
+		return villanos;
+	}
 
 	/*
 	 * pre: no se puede crear una liga ya existente ni con personajes que no existan
 	 * en el archivo de personajes
 	 */
-	public void cargarLigaDesdeArchivo(String path) {
-		try {
-			FileReader archivo = new FileReader(path);
-			BufferedReader lector = new BufferedReader(archivo);
-			String linea;
-			while ((linea = lector.readLine()) != null) {
-
-				String[] data = linea.split(",");
-
-				// reviso si la liga existe, sinó, la creo. Para crearla me fijo si el primero
-				// es un heroe, villano u otra liga.
-				// si existe le agrego los personajes de esa row
-
-				// chequeo liga de heroes. si existe, le agrego los personajes que vienen en
-				// esta linea
-				if (ligaDeHeroes.containsKey(data[0])) {
-					Liga liga = (Liga) ligaDeHeroes.get(data[0]);
-					// aca hay que agregar todos los heroes que vengan en la linea de esta liga
-					for (int i = 1; i < data.length; i++) {
-						if (!liga.pertenece(heroes.get(data[i]))) {
-							liga.agregarCompetidor(heroes.get(data[1]));
-						} else {
-							throw new PerteneceALigaException("el competidor ya pertenece a la liga");
-						}
-					}
-
-				}
-				// chequeo liga de villanos. si existe, le agrego los personajes que vienen en
-				// esta linea
-				else if (ligaDeVillanos.containsKey(data[0])) {
-					Liga liga = (Liga) ligaDeVillanos.get(data[0]);
-
-					// aca hay que agregar todos los heroes que vengan en la linea de esta liga
-					for (int i = 1; i < data.length; i++) {
-						if (!liga.pertenece(villanos.get(data[i]))) {
-							liga.agregarCompetidor(villanos.get(data[i]));
-						} else {
-							throw new PerteneceALigaException("el competidor ya pertenece a la liga");
-						}
-					}
-
-				}
-				// si no existe la liga, la creo y agrego todos los personajes que vengan en la
-				// row, siempre y cuando no pertenezcan a otra liga existente
-				else {
-
-					List<Competidor> listaCompetidores = new LinkedList();
-					Liga ligaAux = null;
-
-					// para saber si es de heroes o villaos, veo el primer competidor
-
-					if (heroes.containsKey(data[1])) {
-						for (int i = 1; i < data.length; i++) {
-							for (String key : ligaDeHeroes.keySet()) {
-								if (ligaDeHeroes.get(key).pertenece(heroes.get(data[i]))) {
-									listaCompetidores.add(heroes.get(data[i]));
-								} else {
-									throw new PerteneceALigaException("el competidor ya pertenece a la liga");
-								}
-							}
-						}
-						ligaAux = new Liga(data[0], listaCompetidores);
-						ligaDeHeroes.put(data[0], ligaAux);
-
-					} else {
-						// recorro todos los personajes de la linea, si alguno existe en alguna de las
-						// ligas existentes, levanto exception
-						for (int i = 1; i < data.length; i++) {
-							for (String key : ligaDeVillanos.keySet()) {
-								if (ligaDeVillanos.get(key).pertenece(villanos.get(data[i]))) {
-									listaCompetidores.add(villanos.get(data[i]));
-								} else {
-									throw new PerteneceALigaException("el competidor ya pertenece a la liga");
-								}
-							}
-
-						}
-						ligaAux = new Liga(data[0], listaCompetidores);
-						ligaDeVillanos.put(data[0], ligaAux);
-					}
-				}
+	private void cargarLigas(String[] data)throws PerteneceALigaException, CompetidorNoPerteneceAlJuego, LigaYaExiste
+	{
+		String nombreLiga = data[0];
+		HashMap<String, Competidor> ligaAAgregar = null;
+		HashMap<String, Personaje> tipoAchequear = null;
+		List<Competidor> listaCompetidores = new LinkedList();
+		Liga liga;
+		Competidor competidor = null;
+		String nombreCompetidor = data[1];
+		
+		if ( !(ligaDeHeroes.containsKey(nombreLiga)) && !(ligaDeVillanos.containsKey(nombreLiga)) ) {
+			
+			if(heroes.containsKey(nombreCompetidor) || ligaDeHeroes.containsKey(nombreCompetidor))
+			{
+				ligaAAgregar = ligaDeHeroes;
+				tipoAchequear = heroes; 
 			}
-
-			if (lector != null) {
-				lector.close();
+			if(villanos.containsKey(nombreCompetidor) || ligaDeVillanos.containsKey(nombreCompetidor))
+			{
+				ligaAAgregar = ligaDeVillanos;
+				tipoAchequear = villanos;
 			}
-			// mostrar las ligas creadas:
-			mostrarLigas();
-		} catch (Exception e) {
-			e.printStackTrace();
-			System.err.println(e);
+			
+			if (ligaAAgregar == null) throw new CompetidorNoPerteneceAlJuego("El competidor no pertenece al Juego");
+			/** Agrega todos los heroes que vengan en la linea de esta liga**/
+			for (int i = 1; i < data.length; i++) {
+				
+				nombreCompetidor = data[i];
+			
+				
+				if(tipoAchequear.containsKey(nombreCompetidor)) {
+					competidor = tipoAchequear.get(nombreCompetidor);
+					for (String key : ligaAAgregar.keySet()) {
+						if (ligaAAgregar.get(key).pertenece(tipoAchequear.get(nombreCompetidor))){
+							
+							throw new PerteneceALigaException("El competidor ya pertenece a una liga");
+						}
+					}
+				}
+					
+				if(ligaAAgregar.containsKey(nombreCompetidor)) 
+					competidor = ligaAAgregar.get(nombreCompetidor); //SI es una liga, tiene que estar ya cargada tambien
+			
+				if (competidor == null) throw new CompetidorNoPerteneceAlJuego("El competidor no pertenece al Juego"); 
+				listaCompetidores.add(competidor);
+			}
+			System.out.println(nombreLiga);
+			liga = new Liga(nombreLiga, listaCompetidores);
+			ligaAAgregar.put(nombreLiga, liga);
+		}else
+		{
+			throw new LigaYaExiste("La liga ya existe"); 
 		}
+
+	}
+	public void cargarLigaDesdeArchivo(String path) throws IOException {
+		FileReader archivo = new FileReader(path);
+		BufferedReader lector = new BufferedReader(archivo);
+		
+		try {
+			String linea;
+			
+			while ((linea = lector.readLine()) != null) {
+				String[] data = linea.split(",");
+				cargarLigas(data);
+			}
+			    // mostrar las ligas creadas:
+			    mostrarLigas();
+			    
+		} catch (Exception e) {
+			   //e.printStackTrace();
+			   System.err.println(e);
+		}
+
+		finally{
+			if (lector != null)
+				lector.close();
+		}
+		
 	}
 
 	public void mostrarLigas() {
-
+		
 		System.out.println("Ligas de heroes en juego" + ligaDeHeroes.keySet().toString());
 		System.out.println("Ligas de villanos en juego" + ligaDeVillanos.keySet().toString());
+		
+		
 	}
 
 	public void iniciarMenu() throws NumberFormatException, IOException {

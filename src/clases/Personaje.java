@@ -72,8 +72,6 @@ public class Personaje implements Competidor{
 	}
 	
 	
-	
-	
 	public int compareTo(Competidor other) {
 
 		Atributo atributo = this.atributoInicial;

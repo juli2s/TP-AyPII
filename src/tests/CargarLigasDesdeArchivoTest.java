@@ -21,10 +21,6 @@ public class CargarLigasDesdeArchivoTest {
 	public void CargarUnaLiga() throws IOException {
 		   Juego j = Juego.getInstance();
 		   j.cargarPersonajesDesdeArchivo("./src/tests/personajes1.txt");
-		   
-			for (String key : j.getHeroes().keySet()) {
-				System.out.println(key);
-			}
 			
 		   j.cargarLigaDesdeArchivo("./src/tests/ligas1.txt");
 		  
@@ -57,7 +53,7 @@ public class CargarLigasDesdeArchivoTest {
            Personaje jugador2 = new Personaje("Edward Blake", "The Comedian", 50 ,10 ,40, 70);
 		   
 		   boolean perteneceVillano= j.getLigaDeVillanos().get("ligaDeVillanosTest").pertenece(jugador1);
-		   boolean perteneceHeroe= j.getLigaDeHeroes().get("ligaDeHeroesTest").pertenece(jugador1);
+		   boolean perteneceHeroe= j.getLigaDeHeroes().get("ligaDeHeroesTest").pertenece(jugador2);
 		   
 		   System.out.println(perteneceVillano);
 		   System.out.println(perteneceHeroe);
@@ -107,6 +103,30 @@ public class CargarLigasDesdeArchivoTest {
 		   j.resetearJugadores();
 		   
 		   Assert.assertEquals(true, perteneceVillano);
+		
+	}
+	
+	@Test
+	public void creacionLigaDeLigayMas() throws IOException {
+		
+		 Juego j = Juego.getInstance();
+		 j.resetearJugadores();
+		 
+		 j.cargarPersonajesDesdeArchivo("./src/tests/personajes5.txt");
+		 j.cargarLigaDesdeArchivo("./src/tests/ligas5.txt");
+		   
+         Personaje jugador1 = new Personaje("Yuri", "YuriGagari", 50 ,10 ,40, 70);
+         Personaje jugador2 = new Personaje("Ita", "SuperIta", 50 ,10 ,40, 70);
+		   
+		   boolean perteneceVillano= j.getLigaDeVillanos().get("SuperMinchis").pertenece(jugador1);
+		   boolean perteneceVillano2 = j.getLigaDeVillanos().get("SuperMinchis").pertenece(jugador2);
+		   
+		   System.out.println(perteneceVillano);
+		   
+		   j.resetearJugadores();
+		   
+		   Assert.assertEquals(true, perteneceVillano);
+		   Assert.assertEquals(true, perteneceVillano2);
 		
 	}
     

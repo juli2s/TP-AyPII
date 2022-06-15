@@ -62,7 +62,12 @@ public class Personaje implements Competidor{
 	}
 	
 	public boolean pertenece(Personaje personaje){
-		return personaje.nombreCompetidor() == personaje.nombreCompetidor();
+		//return this.nombreCompetidor() == personaje.nombreCompetidor();
+		boolean res;
+		
+		res = this.nombreCompetidor().equals( personaje.nombreCompetidor());
+		
+		return res;
 		
 	}
 	

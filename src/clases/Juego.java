@@ -25,8 +25,10 @@ public class Juego {
 	Menu menu = new Menu();
 
 	private static Juego instancia;
-	private HashMap<String, Competidor> heroes = new HashMap<String, Competidor>();
-	private HashMap<String, Competidor> villanos = new HashMap<String, Competidor>();
+	private HashMap<String, Personaje> heroes = new HashMap<String, Personaje>();
+	private HashMap<String, Personaje> villanos = new HashMap<String, Personaje>();
+	private HashMap<String, Competidor> ligaDeHeroes = new HashMap<String, Competidor>();
+	private HashMap<String, Competidor> ligaDeVillanos = new HashMap<String, Competidor>();
 
 	public static Juego getInstance() {
 		if (instancia == null) {
@@ -36,21 +38,32 @@ public class Juego {
 	}
 	
 	public void resetearJugadores(){
-		 heroes = new HashMap<String, Competidor>();
-		 villanos = new HashMap<String, Competidor>();
+		 heroes = new HashMap<String, Personaje>();
+		 villanos = new HashMap<String, Personaje>();
+		 ligaDeHeroes = new HashMap<String, Competidor>();
+		 ligaDeVillanos = new HashMap<String, Competidor>();
 	}
 
 	/*
 	 * post inicializa el juego
 	 */
 
-	public HashMap<String, Competidor> obtenerHeroes() {
+	public HashMap<String, Competidor> getLigaDeHeroes() {
+		return ligaDeHeroes;
+	}
+
+	public HashMap<String, Competidor> getLigaDeVillanos() {
+		return ligaDeVillanos;
+	}
+
+	public HashMap<String, Personaje> getHeroes() {
 		return heroes;
 	}
-	
-	public HashMap<String, Competidor> obtenerVillanos() {
+
+	public HashMap<String, Personaje> getVillanos() {
 		return villanos;
 	}
+
 	
 	public void cargarPersonajesDesdeArchivo(String path) {
 		try {
@@ -137,17 +150,17 @@ public class Juego {
 	public void guardarPersonajesEnArchivo() {
 		try {
 			FileWriter writer = new FileWriter("./src/personajes_out.txt", true);
-			Iterator<Map.Entry<String, Competidor>> iteratorHeroes = this.heroes.entrySet().iterator();
-			Iterator<Map.Entry<String, Competidor>> iteratorVillanos = this.villanos.entrySet().iterator();
+			Iterator<Map.Entry<String, Personaje>> iteratorHeroes = this.heroes.entrySet().iterator();
+			Iterator<Map.Entry<String, Personaje>> iteratorVillanos = this.villanos.entrySet().iterator();
 			while (iteratorHeroes.hasNext()) {
-				Map.Entry<String, Competidor> entrada = (Entry<String, Competidor>) iteratorHeroes.next();
-				Competidor p = entrada.getValue();
+				Map.Entry<String, Personaje> entrada = (Entry<String, Personaje>) iteratorHeroes.next();
+				Personaje p = entrada.getValue();
 				// System.out.println(iterator.next().toString());
 				writer.write(p.toString() + "\n");
 			}
 			while (iteratorVillanos.hasNext()) {
-				Map.Entry<String, Competidor> entrada = (Entry<String, Competidor>) iteratorVillanos.next();
-				Competidor p = entrada.getValue();
+				Map.Entry<String, Personaje> entrada = (Entry<String, Personaje>) iteratorVillanos.next();
+				Personaje p = entrada.getValue();
 				writer.write(p.toString() + "\n");
 			}
 			System.out.println("Guardado completo...");
@@ -201,7 +214,7 @@ public class Juego {
 		Competidor competidor = null;
 		String nombreCompetidor = data[1];
 		
-		if(heroes.containsKey(nombreLiga) || villanos.containsKey(nombreLiga) ) 
+		if(ligaDeHeroes.containsKey(nombreLiga) || ligaDeVillanos.containsKey(nombreLiga) ) 
 			throw new LigaYaExiste("La liga ya existe");
 		
 		if(heroes.containsKey(nombreCompetidor) || ligaDeHeroes.containsKey(nombreCompetidor)){
@@ -271,8 +284,8 @@ public class Juego {
 
 	public void mostrarLigas() {
 		
-		System.out.println("Ligas de heroes en juego" + heroes.keySet().toString());
-		System.out.println("Ligas de villanos en juego" + villanos.keySet().toString());
+		System.out.println("Ligas de heroes en juego" + ligaDeHeroes.keySet().toString());
+		System.out.println("Ligas de villanos en juego" + ligaDeVillanos.keySet().toString());
 		
 		
 	}
@@ -281,20 +294,9 @@ public class Juego {
 		menu.generarMenu(this);
 	}
 
-	public HashMap<String, Competidor> getHeroes() {
-		return heroes;
-	}
-
-	public HashMap<String, Competidor> getVillanos() {
-		return villanos;
-	}
-
 	private String mostrarMensaje(String opciones) throws NumberFormatException, IOException {
 		System.out.println(opciones + "\n");
 		return input.readLine();
 	}
 
-	
-	
 }
-

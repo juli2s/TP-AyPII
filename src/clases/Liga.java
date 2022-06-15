@@ -24,6 +24,11 @@ public class Liga implements Competidor{
 	}
 	
 	
+	public List<Competidor> getIntegrantes() {
+		return integrantes;
+	}
+
+
 	public HashMap<Atributo, Integer> getCaracteristicas() {
 		return caracteristicas;
 	}

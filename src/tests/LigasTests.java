@@ -219,7 +219,7 @@ public class LigasTests {
       
 	   System.out.println(esGanador);
 	   
-	   Assert.assertEquals(false, esGanador);
+	   Assert.assertFalse(jugador1.esGanador(Atributo.FUERZA, liga1));
 	}
 
 

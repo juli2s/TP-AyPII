@@ -24,6 +24,11 @@ public class Liga implements Competidor{
 	}
 	
 	
+	public List<Competidor> getIntegrantes() {
+		return integrantes;
+	}
+
+
 	public HashMap<Atributo, Integer> getCaracteristicas() {
 		return caracteristicas;
 	}
@@ -114,6 +119,12 @@ public class Liga implements Competidor{
 		}
 		
 		return suma;
+	}
+	// agrego metodo para saber cuantos competidores tiene una liga.
+	
+	public int cantidadDeCompetidores() {
+		return this.integrantes.size();
+		
 	}
 
 }

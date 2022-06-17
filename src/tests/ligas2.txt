@@ -1,0 +1,2 @@
+ligaDeHeroesTest, The Comedian
+ligaDeVillanosTest, Ozymandias

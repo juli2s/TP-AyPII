@@ -64,6 +64,8 @@ public class Personaje implements Competidor{
 		
 		res = this.getNombre().equals( personaje.getNombre());
 		
+		System.out.println(this.getNombre() + " " + personaje.getNombre());
+		
 		return res;
 		
 	}

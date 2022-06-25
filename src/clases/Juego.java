@@ -56,6 +56,15 @@ public class Juego {
 		return ligaDeVillanos;
 	}
 
+	public HashMap<String, Personaje> getHeroes() {
+		return heroes;
+	}
+
+	public HashMap<String, Personaje> getVillanos() {
+		return villanos;
+	}
+
+	
 	public void cargarPersonajesDesdeArchivo(String path) {
 		try {
 			FileReader archivo = new FileReader(path);
@@ -190,20 +199,12 @@ public class Juego {
 		}
 	}
     
-	public HashMap<String, Personaje> getHeroes() {
-		return heroes;
-	}
-
-	public HashMap<String, Personaje> getVillanos() {
-		return villanos;
-	}
-
+	
 	/*
 	 * pre: no se puede crear una liga ya existente ni con personajes que no existan
 	 * en el archivo de personajes
 	 */
-	private void cargarLigas(String[] data)throws PerteneceALigaException, CompetidorNoPerteneceAlJuego, LigaYaExiste
-	{
+	private void cargarLigas(String[] data)throws PerteneceALigaException, CompetidorNoPerteneceAlJuego, LigaYaExiste{
 		String nombreLiga = data[0].trim();
 		HashMap<String, Competidor> ligaAAgregar = null;
 		HashMap<String, Personaje> tipoAchequear = null;
@@ -257,9 +258,10 @@ public class Juego {
 		}else
 		{
 			throw new LigaYaExiste("La liga ya existe"); 
-		}
-
+		}		
 	}
+	
+	
 	public void cargarLigaDesdeArchivo(String path) throws IOException {
 		FileReader archivo = new FileReader(path);
 		BufferedReader lector = new BufferedReader(archivo);
@@ -293,8 +295,43 @@ public class Juego {
 		
 		
 	}
+	
+	public String pelear() throws CompetidorNoPerteneceAlJuego, LigaYaExiste{
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		String ganador = "El ganador es: ";
+		
+		try {	
+			System.out.println("Nombre de retador\n");
+			String nombreRetador = br.readLine();
+			verificarExistencia(nombreRetador);
+			
+			System.out.println("Nombre de contrincante\n");
+			String nombreContrincante = br.readLine();
+			verificarExistencia(nombreContrincante);
 
-	public void iniciarMenu() throws NumberFormatException, IOException {
+			System.out.println("Indique atributo\n");
+			String attr = br.readLine().toUpperCase();
+			Atributo atributo = Atributo.valueOf(attr);
+			
+			if(obtenerDeUnBando(nombreRetador).esGanador(atributo, obtenerDeUnBando(nombreContrincante)))
+				ganador += nombreRetador;
+			else if(obtenerDeUnBando(nombreRetador).esGanador(atributo, obtenerDeUnBando(nombreContrincante)))
+				ganador += nombreContrincante;
+			else
+				ganador = "Empate";
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		
+		
+		return ganador;
+	}
+
+	
+	
+	public void iniciarMenu() throws NumberFormatException, IOException, CompetidorNoPerteneceAlJuego {
 		menu.generarMenu(this);
 	}
 
@@ -302,5 +339,19 @@ public class Juego {
 		System.out.println(opciones + "\n");
 		return input.readLine();
 	}
-
+	
+	private Competidor obtenerDeUnBando(String nombre) {
+		if(heroes.containsKey(nombre))
+			return heroes.get(nombre);
+	
+		return villanos.get(nombre);
+	}
+	
+	private void verificarExistencia(String nombreCompetidor)throws CompetidorNoPerteneceAlJuego, LigaYaExiste {
+		if(!heroes.containsKey(nombreCompetidor) && !villanos.containsKey(nombreCompetidor))
+			throw new CompetidorNoPerteneceAlJuego("El competidor no pertenece al Juego");
+		if(ligaDeHeroes.containsKey(nombreCompetidor) || ligaDeVillanos.containsKey(nombreCompetidor))
+			throw new LigaYaExiste("La liga ya existe");
+		
+	}
 }

@@ -3,17 +3,18 @@ package clases;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import excepciones.CompetidorNoPerteneceAlJuego;
 
 public class Menu {
 	
 	
 	BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
-	public void generarMenu(Juego juego) throws NumberFormatException, IOException {
+	public void generarMenu(Juego juego) throws NumberFormatException, IOException, CompetidorNoPerteneceAlJuego {
 		boolean salir = true;
 		int opc = 0;
 
 		do {
-
+			try {
 			switch (mostrarSubMenu(("\n"+"Menu principal: \n" + "1 - Administración de personajes  \n"
 					+ "2 - Administracion de ligas \n" + "3 - Combates \n" + "4 - Reportes \n" + "5- Salir \n"))) {
 			case 1:
@@ -23,7 +24,7 @@ public class Menu {
 							+ "3- Listar personajes \n" + "4- Guardar personajes en archivo\n" + "5- atrás\n")) {
 
 					case 1:
-						juego.cargarPersonajesDesdeArchivo("./src/personajes.txt");
+						juego.cargarPersonajesDesdeArchivo("./src/tests/personajes1.txt");
 						break;
 					case 2:
 						juego.cargarPersonajesManualmente();
@@ -68,10 +69,14 @@ public class Menu {
 				break;
 			case 3:
 				while (opc != 3) {
-					switch (mostrarSubMenu("\n"+"1- Combate Personaje contra liga \n" + "2- Combate Liga contra liga \n" + "3- atrás\n")) {
+					switch (mostrarSubMenu("\n"+"1- Pelear \n" + "2- Combate Liga contra liga \n" + "3- atrás\n")) {
 
 					case 1:
-						System.out.println("metodo para combate  entre personaje y Ligas");
+						try {
+						System.out.println(juego.pelear());
+						}catch(Exception CompetidorNoPerteneceAlJuego) {
+							System.out.println("El personaje no existe");
+						}
 						break;
 					case 2:
 						System.out.println("metodo para combate entre Ligas");
@@ -103,6 +108,10 @@ public class Menu {
 			case 5:
 				salir = !salir;
 				
+			}
+			}catch(Exception NumberFormatException) {
+				System.out.println("Opcion invalida");
+				generarMenu(juego);
 			}
 		} while (!salir);
 	}

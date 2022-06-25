@@ -6,9 +6,9 @@ public interface Competidor extends Comparable<Competidor>{
 	
 	
 	//public boolean esGanador(Atributo atributo, Competidor contrincante);
-	public boolean pertenece( Personaje personaje);
+	public boolean pertenece(Competidor personaje);
 	public HashMap<Atributo, Integer> getCaracteristicas();
-	public String nombreCompetidor();
+	public String getNombre();
 	public boolean esGanador(Atributo atributo, Competidor contrincante);
 	
 

@@ -212,7 +212,6 @@ public class LigasTests {
 	   listaLiga2.add(jugador5);
 	   listaLiga2.add(liga1);
 	   
-	   System.out.println("llego");
 	   System.out.println(liga1.getCaracteristicas().get(Atributo.FUERZA));
        boolean esGanador = jugador1.esGanador(Atributo.FUERZA, liga1);
 	   

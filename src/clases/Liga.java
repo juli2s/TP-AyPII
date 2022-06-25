@@ -51,11 +51,10 @@ public class Liga implements Competidor{
 	}
    
     public boolean pertenece(Competidor personaje){
-    	boolean pertenece = false;
+        boolean pertenece = false;
     	
     	for (Competidor integrante: integrantes) {
-    		if(personaje.getNombre().equals(integrante.getNombre()))
-    			pertenece = true;
+    		pertenece =  pertenece || integrante.pertenece(personaje);
 			
 		}
     	

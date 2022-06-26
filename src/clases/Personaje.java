@@ -70,7 +70,12 @@ public class Personaje implements Competidor{
 	
 	@Override
 	public String toString() {
-		return this.nombrePersonaje + this.nombreReal;
+		String result = "";
+		for(Integer c : caracteristicas.values()) {
+			result += ", " + c.toString();
+		}
+		
+		return  this.nombreReal +", " + this.nombrePersonaje + ", " + result;
 	}
 	
 	

@@ -48,8 +48,7 @@ public class CargarLigasDesdeArchivoTest {
 		   Assert.assertTrue(j.getLigaDeHeroes().get("ligaDeHeroesTest").pertenece(jugador2));
 		  
 		   j.resetearJugadores();
-		   //Assert.assertEquals(2, j.getLigaDeHeroes().keySet().size()); 
-		   //Assert.assertEquals(1, j.getLigaDeVillanos().keySet().size());
+		 
 	}
 	
 	@Test

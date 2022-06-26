@@ -19,7 +19,7 @@ public class Liga implements Competidor{
 		this.nombreLiga = nombreLiga;
 		this.integrantes = integrantes;
 		this.atributoInicial = Atributo.VELOCIDAD;
-		//calcularAtributos();
+		calcularAtributos();
 		
 	}
 	
@@ -33,16 +33,16 @@ public class Liga implements Competidor{
 		return caracteristicas;
 	}
 	
+	public String getNombre() {
+		return nombreLiga;
+	}
 	
-    public boolean agregarCompetidor(Competidor competidor){
+	
+    public void agregarCompetidor(Competidor competidor){
     	//falta ver que aun no pertenezca
     	
-    	boolean inserto = true;
 		integrantes.add(competidor);
 		calcularAtributos();
-		
-		return inserto;
-		
 	}
     
     
@@ -50,8 +50,8 @@ public class Liga implements Competidor{
 		return nombreLiga;
 	}
    
-    public boolean pertenece( Personaje personaje){
-    	boolean pertenece = false;
+    public boolean pertenece(Competidor personaje){
+        boolean pertenece = false;
     	
     	for (Competidor integrante: integrantes) {
     		pertenece =  pertenece || integrante.pertenece(personaje);
@@ -104,10 +104,10 @@ public class Liga implements Competidor{
 
 	private void calcularAtributos(){
 		
-		caracteristicas.put(Atributo.VELOCIDAD, calcularSumaDeAtributos(Atributo.VELOCIDAD)/integrantes.size());
-		caracteristicas.put(Atributo.FUERZA, calcularSumaDeAtributos(Atributo.FUERZA)/integrantes.size());
-		caracteristicas.put(Atributo.RESISTENCIA, calcularSumaDeAtributos(Atributo.RESISTENCIA)/integrantes.size());
-		caracteristicas.put(Atributo.DESTREZA, calcularSumaDeAtributos(Atributo.DESTREZA)/integrantes.size());		
+		caracteristicas.put(Atributo.VELOCIDAD, calcularSumaDeAtributos(Atributo.VELOCIDAD)/cantidadDeCompetidores());
+		caracteristicas.put(Atributo.FUERZA, calcularSumaDeAtributos(Atributo.FUERZA)/cantidadDeCompetidores());
+		caracteristicas.put(Atributo.RESISTENCIA, calcularSumaDeAtributos(Atributo.RESISTENCIA)/cantidadDeCompetidores());
+		caracteristicas.put(Atributo.DESTREZA, calcularSumaDeAtributos(Atributo.DESTREZA)/cantidadDeCompetidores());		
 	
 	}
 	
@@ -120,7 +120,6 @@ public class Liga implements Competidor{
 		
 		return suma;
 	}
-	// agrego metodo para saber cuantos competidores tiene una liga.
 	
 	public int cantidadDeCompetidores() {
 		return this.integrantes.size();

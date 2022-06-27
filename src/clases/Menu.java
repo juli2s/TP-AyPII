@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import excepciones.CompetidorNoPerteneceAlJuego;
+import java.util.LinkedList;
+import java.util.List;
 
 public class Menu {
 	
@@ -24,7 +26,7 @@ public class Menu {
 							+ "3- Listar personajes \n" + "4- Guardar personajes en archivo\n" + "5- atrás\n")) {
 
 					case 1:
-						juego.cargarPersonajesDesdeArchivo("./src/tests/personajes1.txt");
+						juego.cargarPersonajesDesdeArchivo("./src/tests/personajes6.txt");
 						break;
 					case 2:
 						juego.cargarPersonajesManualmente();
@@ -69,7 +71,7 @@ public class Menu {
 				break;
 			case 3:
 				while (opc != 3) {
-					switch (mostrarSubMenu("\n"+"1- Pelear \n" + "2- Combate Liga contra liga \n" + "3- atrás\n")) {
+					switch (mostrarSubMenu("\n"+"1- Pelear \n" + "2- atrás \n")) {
 
 					case 1:
 						try {
@@ -79,9 +81,6 @@ public class Menu {
 						}
 						break;
 					case 2:
-						System.out.println("metodo para combate entre Ligas");
-						break;
-					case 3:
 						opc = 3;
 						generarMenu(juego);
 					}
@@ -93,11 +92,35 @@ public class Menu {
 					switch (mostrarSubMenu("\n"+"1- Todos los personajes o ligas que venzan a un personaje dado para cierta caract\n"
 						+ " 2- Listado ordenado de personajes por múltiples características \n"+"3- atrás\n")) {
 					case 1:
-						System.out.println("metodo para reporte de personajes o ligas que venzan a otro");
+						try {
+						String lista = juego.listarPersonajesQueVenzanAUno();
+						System.out.println(lista);
+						}
+						catch(CompetidorNoPerteneceAlJuego a) {
+							System.err.println(a);
+						}
 						break;
 					case 2:
-						juego.listarPersonajesPorMultiplesCaracteristicas();
-						break;
+							String atributo1 = mostrarMensaje("Primer atributo");
+							String atributo2 = mostrarMensaje("Segundo atributo");
+							switch (mostrarSubMenu("1) Menor a mayor\n 2) Mayor a menor")) {
+							case 1:
+								try {
+									String lista = juego.listarPersonajesPorMultiplesCaracteristicas(atributo1, atributo2, 1);
+									System.out.println(lista);	
+								}catch (NumberFormatException | IOException e) {
+									System.err.println("Opcion ingresada invalida");
+								}
+							break;
+							case 2:
+								try {
+									String lista = juego.listarPersonajesPorMultiplesCaracteristicas(atributo1, atributo2, -1);
+									System.out.println(lista);	
+								}catch (NumberFormatException | IOException e) {
+									System.err.println("Opcion ingresada invalida");
+								}
+							break;
+					}
 					case 3:
 						opc = 3;
 						generarMenu(juego);
@@ -124,5 +147,9 @@ public class Menu {
 		return Integer.parseInt(input.readLine());
 	}
 	
-	
+	private String mostrarMensaje(String opciones) throws NumberFormatException, IOException {
+		System.out.println(opciones + "\n");
+		return input.readLine();
+	}
+
 }

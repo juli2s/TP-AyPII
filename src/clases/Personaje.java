@@ -58,19 +58,15 @@ public class Personaje implements Competidor{
 	}
 	
 	
+	
 	public boolean pertenece(Competidor personaje){
-		//return this.nombreCompetidor() == personaje.nombreCompetidor();
-		boolean res;
-		
-		res = this.getNombre().equals( personaje.getNombre());
-		
-		return res;
-		
+		return this.getNombre().equals( personaje.getNombre());
 	}
+	
 	
 	@Override
 	public String toString() {
-		return this.nombrePersonaje + this.nombreReal;
+		return this.nombrePersonaje;
 	}
 	
 	

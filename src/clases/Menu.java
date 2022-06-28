@@ -32,7 +32,7 @@ public class Menu {
 						juego.cargarPersonajesManualmente();
 						break;
 					case 3:
-						System.out.println("metodo para listar personajes");
+						juego.listarPersonajes();
 						break;
 					case 4:
 						juego.guardarPersonajesEnArchivo();
@@ -51,7 +51,7 @@ public class Menu {
 							+ "3- Listar Ligas \n" + "4- Guardar Ligas en archivo \n" + "5- atrás\n")) {
 
 					case 1:
-						juego.cargarLigaDesdeArchivo("./src/ligas.txt");
+						juego.cargarLigaDesdeArchivo("./src/ligas5.txt");
 						break;
 					case 2:
 						System.out.println("metodo para cargar Ligas manualmente");
@@ -129,7 +129,7 @@ public class Menu {
 				opc = 0;
 				break;
 			case 5:
-				salir = !salir;
+				salir = true;
 				
 			}
 			}catch(Exception NumberFormatException) {

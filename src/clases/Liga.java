@@ -52,11 +52,12 @@ public class Liga implements Competidor{
    
     public boolean pertenece(Competidor personaje){
         boolean pertenece = false;
+    	Iterator <Competidor> it = integrantes.iterator();
+        
+        while(!pertenece && it.hasNext()) {
+        	pertenece = it.next().pertenece(personaje);
+        }
     	
-    	for (Competidor integrante: integrantes) {
-    		pertenece =  pertenece || integrante.pertenece(personaje);
-			
-		}
     	
     	return pertenece;
     }

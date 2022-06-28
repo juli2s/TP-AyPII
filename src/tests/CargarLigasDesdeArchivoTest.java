@@ -13,12 +13,51 @@ import clases.Competidor;
 import clases.Juego;
 import clases.Liga;
 import clases.Personaje;
+import excepciones.CompetidorNoPerteneceAlJuego;
+import excepciones.LigaYaExiste;
 import excepciones.PerteneceALigaException;
+import excepciones.FormatoArchivoIncorrecto;
 
 public class CargarLigasDesdeArchivoTest {
+	
+	@Test (expected = FormatoArchivoIncorrecto.class)
+	public void ArchivoPersonajeVacio() throws IOException, FormatoArchivoIncorrecto {
+		   Juego j = Juego.getInstance();
+		   j.cargarPersonajesDesdeArchivo("./src/tests/personajes0.txt");
+			
+		   
+	}
+	
+	@Test (expected = FormatoArchivoIncorrecto.class)
+	public void ArchivoLigaVacio() throws IOException, FormatoArchivoIncorrecto, PerteneceALigaException, CompetidorNoPerteneceAlJuego, LigaYaExiste {
+		   Juego j = Juego.getInstance();
+		   j.cargarPersonajesDesdeArchivo("./src/tests/personajes0.txt");
+		   
+		   j.cargarLigaDesdeArchivo("./src/tests/ligas0.txt");
+			
+		   
+	}
+	
+	@Test 
+	public void rutaIncorrecta() throws IOException, FormatoArchivoIncorrecto, PerteneceALigaException, CompetidorNoPerteneceAlJuego, LigaYaExiste {
+		   Juego j = Juego.getInstance();
+		   j.cargarPersonajesDesdeArchivo("./src/tests/personajes.txt");
+		   
+		   
+	}
+	
+	@Test 
+	public void personajeConAtributosMal() throws IOException, FormatoArchivoIncorrecto, PerteneceALigaException, CompetidorNoPerteneceAlJuego, LigaYaExiste {
+		   Juego j = Juego.getInstance();
+		   j.cargarPersonajesDesdeArchivo("./src/tests/personajes8.txt");
+		   
+		   j.cargarLigaDesdeArchivo("./src/tests/ligas8.txt");
+		   
+		   
+	}
 
 	@Test
-	public void CargarUnaLiga() throws IOException {
+	public void CargarUnaLiga() throws IOException, FormatoArchivoIncorrecto, PerteneceALigaException, CompetidorNoPerteneceAlJuego, LigaYaExiste {
 		   Juego j = Juego.getInstance();
 		   j.cargarPersonajesDesdeArchivo("./src/tests/personajes1.txt");
 			
@@ -32,10 +71,58 @@ public class CargarLigasDesdeArchivoTest {
 		   
 	}
 	
+	@Test 
+	public void CargarUnPersonajeIncorrecto() throws IOException, FormatoArchivoIncorrecto, PerteneceALigaException, CompetidorNoPerteneceAlJuego, LigaYaExiste {
+		   Juego j = Juego.getInstance();
+		   j.cargarPersonajesDesdeArchivo("./src/tests/personajes6.txt");
+			
+		   j.cargarLigaDesdeArchivo("./src/tests/ligas6.txt");
+		  
+		   Competidor jugador1 = new Personaje("Edward Blake", "The Comedian", 50 ,10 ,40, 70);
+		   
+		   Assert.assertTrue(j.getLigaDeHeroes().get("Watchmen").pertenece(jugador1));
+		   
+		   j.resetearJugadores();
+		   
+	}
+	
+	@Test 
+	public void CargarUnPersonajeDeOtraLiga() throws IOException, FormatoArchivoIncorrecto, PerteneceALigaException, CompetidorNoPerteneceAlJuego, LigaYaExiste {
+		   Juego j = Juego.getInstance();
+		   j.cargarPersonajesDesdeArchivo("./src/tests/personajes6.txt");
+			
+		   j.cargarLigaDesdeArchivo("./src/tests/ligas6.txt");
+		   j.cargarLigaDesdeArchivo("./src/tests/ligas7.txt");
+		  
+		   Competidor jugador1 = new Personaje("Edward Blake", "The Comedian", 50 ,10 ,40, 70);
+		   
+		   Assert.assertTrue(j.getLigaDeHeroes().get("Watchmen").pertenece(jugador1));
+		   
+		   j.resetearJugadores();
+		   
+	}
+	@Test (expected = LigaYaExiste.class) 
+	public void CargarUnaLigaExistente() throws IOException, FormatoArchivoIncorrecto, PerteneceALigaException, CompetidorNoPerteneceAlJuego, LigaYaExiste {
+		   Juego j = Juego.getInstance();
+		   j.cargarPersonajesDesdeArchivo("./src/tests/personajes6.txt");
+			
+		   j.cargarLigaDesdeArchivo("./src/tests/ligas6.txt");
+		   j.cargarLigaDesdeArchivo("./src/tests/ligas6.txt");
+		  
+		   Competidor jugador1 = new Personaje("Edward Blake", "The Comedian", 50 ,10 ,40, 70);
+		   
+		   Assert.assertTrue(j.getLigaDeHeroes().get("Watchmen").pertenece(jugador1));
+		   
+		   j.resetearJugadores();
+		   
+	}
+	
+	
 	@Test
-	public void CargarUnaLigaDeHeroesYDeVillanos() throws IOException {
+	public void CargarUnaLigaDeHeroesYDeVillanos() throws IOException, FormatoArchivoIncorrecto, PerteneceALigaException, CompetidorNoPerteneceAlJuego, LigaYaExiste {
 		
 		 Juego j = Juego.getInstance();
+		 j.resetearJugadores();
 		   j.cargarPersonajesDesdeArchivo("./src/tests/personajes2.txt");
 		   j.cargarLigaDesdeArchivo("./src/tests/ligas2.txt");
 		   
@@ -53,7 +140,7 @@ public class CargarLigasDesdeArchivoTest {
 	}
 	
 	@Test
-	public void cantidadDePersonajesCorrecta() throws IOException {
+	public void cantidadDePersonajesCorrecta() throws IOException, FormatoArchivoIncorrecto, PerteneceALigaException, CompetidorNoPerteneceAlJuego, LigaYaExiste {
 		// Watchmen se carga en ligas1.txt , ligaHeroesTest en ligas2.txt con 1 y 2 competidores respectivamente
 		Juego j = Juego.getInstance();
 		j.resetearJugadores();
@@ -71,7 +158,7 @@ public class CargarLigasDesdeArchivoTest {
 	}
 	
 	@Test
-	public void creacionLigaDeLiga() throws IOException {
+	public void creacionLigaDeLiga() throws IOException, FormatoArchivoIncorrecto, PerteneceALigaException, CompetidorNoPerteneceAlJuego, LigaYaExiste {
 		
 		 Juego j = Juego.getInstance();
 		 j.resetearJugadores();
@@ -89,7 +176,7 @@ public class CargarLigasDesdeArchivoTest {
 	}
 	
 	@Test
-	public void creacionLigaDeLigayMas() throws IOException {
+	public void creacionLigaDeLigayMas() throws IOException, FormatoArchivoIncorrecto, PerteneceALigaException, CompetidorNoPerteneceAlJuego, LigaYaExiste {
 		
 		 Juego j = Juego.getInstance();
 		 j.resetearJugadores();

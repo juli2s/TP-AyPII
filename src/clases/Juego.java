@@ -14,8 +14,10 @@ import java.util.Map.Entry;
 import java.util.LinkedList;
 import java.util.Scanner;
 
+import excepciones.ContrincantesIncompatibles;
 import excepciones.FormatoArchivoIncorrecto;
 import excepciones.FormatoCamposIncorrecto;
+import excepciones.LigaVacia;
 import excepciones.PerteneceALigaException;
 import excepciones.CompetidorNoPerteneceAlJuego;
 import excepciones.LigaYaExiste;
@@ -244,11 +246,14 @@ public class Juego {
 			while(it.hasNext()) {
 				Competidor contendiente = it.next();
 				if(contendiente.getCaracteristicas().get(atributo) > retador.getCaracteristicas().get(atributo))
-					lista += contendiente.toString() + "\n";
+					lista += contendiente.getNombre() + "\n";
 			}
+			System.out.println("***** VENCEN SOBRE "+ nombre +" ****");
+			
 		} catch (NumberFormatException | IOException e) {
 			System.err.println("Opcion ingresada invalida");
 		}
+		
 		return lista;
 	}
 	
@@ -312,7 +317,7 @@ public class Juego {
 			for (int i = 1; i < data.length; i++) {
 				
 				nombreCompetidor = data[i].trim();
-				
+				competidor = null;
 				try{
 					if(tipoAchequear.containsKey(nombreCompetidor)) {
 						competidor = tipoAchequear.get(nombreCompetidor);
@@ -430,16 +435,41 @@ public class Juego {
 	public String pelear() throws CompetidorNoPerteneceAlJuego, LigaYaExiste{
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		String ganador = "El ganador es: ";
+		String tipoRetador = null;
+		String tipoContrincante = null;
 		
 		try {	
 			System.out.println("Nombre de retador\n");
 			String nombre = br.readLine();
 			Competidor retador = obtenerCompetidor(nombre);
 			
+			
+			if(heroes.containsKey(nombre) || ligaDeHeroes.containsKey(nombre))
+			{
+				tipoRetador = "heroes"; 
+			}
+			
+			if(villanos.containsKey(nombre) || ligaDeVillanos.containsKey(nombre))
+			{   
+				tipoRetador = "villanos";
+			}
+			
 			System.out.println("Nombre de contrincante\n");
 			nombre = br.readLine();
 			Competidor contrincante = obtenerCompetidor(nombre);
-
+			
+			if(heroes.containsKey(nombre) || ligaDeHeroes.containsKey(nombre))
+			{
+				tipoContrincante = "heroes";
+			}
+			
+			if(villanos.containsKey(nombre) || ligaDeVillanos.containsKey(nombre))
+			{   
+				tipoContrincante = "villanos";
+			}
+			
+			if (tipoRetador.equals(tipoContrincante)) throw new ContrincantesIncompatibles("No pueden pelear competidores del mismo bando");
+			
 			System.out.println("Indique atributo\n");
 			String attr = br.readLine().toUpperCase();
 			Atributo atributo = Atributo.valueOf(attr);
@@ -451,7 +481,7 @@ public class Juego {
 			else
 				ganador = "Empate";
 			
-		} catch (IOException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		

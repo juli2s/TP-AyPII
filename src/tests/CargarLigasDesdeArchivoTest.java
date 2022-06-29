@@ -106,7 +106,6 @@ public class CargarLigasDesdeArchivoTest {
 		   Juego j = Juego.getInstance();
 		   j.cargarPersonajesDesdeArchivo("./src/tests/personajes6.txt");
 		   
-		   //System.out.println("pasa");
 			
 		   j.cargarLigaDesdeArchivo("./src/tests/ligas6.txt");
 		   j.cargarLigaDesdeArchivo("./src/tests/ligas6.txt");

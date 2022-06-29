@@ -5,6 +5,10 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import excepciones.CompetidorNoPerteneceAlJuego;
+import excepciones.LigaVacia;
+import excepciones.PerteneceALigaException;
+
 public class Liga implements Competidor{
     private HashMap<Atributo,Integer> caracteristicas = new HashMap<Atributo,Integer>();
 	
@@ -16,13 +20,34 @@ public class Liga implements Competidor{
 	public Liga(String nombreLiga,List<Competidor> integrantes) {
 		
 		// faltan los try catch
-		this.nombreLiga = nombreLiga;
-		this.integrantes = integrantes;
-		this.atributoInicial = Atributo.VELOCIDAD;
-		calcularAtributos();
+		try{
+			if (integrantes == null || integrantes.size() == 0) throw new LigaVacia("La liga no posee integrantes");
+			 
+			this.nombreLiga = nombreLiga;
+			this.integrantes = integrantes;
+			this.atributoInicial = Atributo.VELOCIDAD;
+			calcularAtributos();
+		}catch (Exception e){
+			System.err.println(e.getMessage());
+		}
 		
 	}
 	
+	public String toString() {
+		String result = "";
+		int contador = 0;
+		for(Competidor c : integrantes) {
+			if (contador == 0)
+			{
+				result += c.getNombre();
+			}else{
+				result += ", " + c.getNombre();
+			}
+			contador++;
+		}
+		
+		return  this.nombreLiga +", "  + result;
+	}
 	
 	public List<Competidor> getIntegrantes() {
 		return integrantes;

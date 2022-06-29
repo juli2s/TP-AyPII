@@ -4,3 +4,11 @@ Ozymandias
 Héroe,Lagartija, Anastasia, , 150, 50, 200, 100
 Héroe,Edward Blake, The Comedian, , 150, 50, 200, 100
 Villano,Adrian Veidt, Ozymandias, , 200, 200, 180, 120
+Héroe, Fer, SuperFer, , 30, 40, 60, 40
+Héroe, Tomas, Vultron, , 20, 30, 10, 50
+Héroe, Edward Blake, The Comedian, , 200, 100, 50, 150
+Héroe, Romi, SuperRomi, , 30, 50, 60, 40
+Villano, Chiquita, Tormenta, , 30, 40, 60, 40
+Villano, Ita, SuperIta, , 30, 50, 60, 40
+Villano, Adrian Veidt2, Ozymandias, , 180, 120, 200, 200
+Villano, Yuri, YuriGagari, , 30, 40, 60, 40

@@ -85,12 +85,13 @@ public class Juego {
 			while (linea != null) {
 				String[] data = linea.split(",");
 				try {
-					String tipoHeroe = data[0].trim();
+					String tipoPersonaje = data[0].trim();
 				
-					if (!tipoHeroe.equals("Héroe") && !tipoHeroe.equals("Villano") )
+					if (!tipoPersonaje.equals("Héroe") && !tipoPersonaje.equals("Villano") )
 					{
 						throw new FormatoCamposIncorrecto("El formato del campo no es correcto");
 					}
+					
 					String nombreReal = data[1].trim();				
 					String nombrePersonaje = data[2].trim();
 				
@@ -104,16 +105,16 @@ public class Juego {
 					Integer resistencia = Integer.parseInt(data[5].trim());
 					Integer destreza = Integer.parseInt(data[6].trim());
 
-					if (tipoHeroe.equals("Héroe")) {
+					if (tipoPersonaje.equals("Héroe")) {
 						Personaje h = new Personaje(nombreReal, nombrePersonaje,velocidad,
 								fuerza, resistencia,
 								destreza);
 
-						heroes.put(nombrePersonaje.trim(), h); //creo que la key tiene que ser el nmbre de personaje porque es es el que se pasa en ligas.in
+						heroes.put(nombrePersonaje.trim(), h);
 						
 
 					}
-					if (tipoHeroe.equals("Villano")) {
+					if (tipoPersonaje.equals("Villano")) {
 						Personaje v = new Personaje(nombreReal, nombrePersonaje,velocidad,
 								fuerza, resistencia,
 								destreza);
@@ -399,6 +400,32 @@ public class Juego {
 		
 		
 	}
+
+	public void cargarLigasManualmente() throws CompetidorNoPerteneceAlJuego, LigaYaExiste, PerteneceALigaException{
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		
+		try {
+			System.out.println("Cantidad de integrantes\n");
+			int cantidad = Integer.parseInt(br.readLine());
+			String[] data = new String[cantidad + 1];
+				
+			data[0] = mostrarMensaje("Nombre de liga");
+
+			for(int i = 1; i < data.length; i++) {
+				String nombre = mostrarMensaje("Nombre de integrante");
+//				verificarExistencia(nombre);
+				data[i] = nombre;			
+				
+			}
+			
+			cargarLigas(data);
+			
+			
+		}catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	
 	public void guardarLigasEnArchivo(boolean mostrar) {
 		try {
@@ -444,15 +471,17 @@ public class Juego {
 			Competidor retador = obtenerCompetidor(nombre);
 			
 			
-			if(heroes.containsKey(nombre) || ligaDeHeroes.containsKey(nombre))
-			{
+			if(heroes.containsKey(nombre) || ligaDeHeroes.containsKey(nombre)){
+				
 				tipoRetador = "heroes"; 
-			}
 			
-			if(villanos.containsKey(nombre) || ligaDeVillanos.containsKey(nombre))
-			{   
+			}else {
+				
 				tipoRetador = "villanos";
+				
 			}
+			  
+			
 			
 			System.out.println("Nombre de contrincante\n");
 			nombre = br.readLine();
@@ -510,8 +539,12 @@ public class Juego {
 		verificarExistencia(nombre);
 		if(heroes.containsKey(nombre))
 			return heroes.get(nombre);
-	
-		return villanos.get(nombre);
+		else if(ligaDeHeroes.containsKey(nombre))
+			return ligaDeHeroes.get(nombre);
+		else if(ligaDeHeroes.containsKey(nombre))
+			return villanos.get(nombre);
+		else
+			return ligaDeVillanos.get(nombre);
 	}
 	
 	private void verificarExistencia(String nombreCompetidor)throws CompetidorNoPerteneceAlJuego{

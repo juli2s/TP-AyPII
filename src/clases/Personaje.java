@@ -12,6 +12,7 @@ public class Personaje implements Competidor{
 	private String nombrePersonaje;
 	private Atributo atributoInicial;
 	
+	
 	public Personaje(String nombreReal,String nombrePersonaje,Integer velocidad,Integer fuerza,Integer resistencia,Integer destreza) {
 		
 		// faltan los try catch

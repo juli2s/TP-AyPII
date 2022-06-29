@@ -64,7 +64,7 @@ public class Menu {
 						juego.cargarLigaDesdeArchivo(ruta);
 						break;
 					case 2:
-						System.out.println("metodo para cargar Ligas manualmente");
+						juego.cargarLigasManualmente();
 						break;
 					case 3:
 						juego.guardarLigasEnArchivo(true);

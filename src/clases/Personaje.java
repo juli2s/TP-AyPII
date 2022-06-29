@@ -11,15 +11,16 @@ public class Personaje implements Competidor{
 	private String nombreReal;
 	private String nombrePersonaje;
 	private Atributo atributoInicial;
+	private String bando;
 	
-	
-	public Personaje(String nombreReal,String nombrePersonaje,Integer velocidad,Integer fuerza,Integer resistencia,Integer destreza) {
+	public Personaje(String nombreReal,String nombrePersonaje,Integer velocidad,Integer fuerza,Integer resistencia,Integer destreza, String bando) {
 		
 		// faltan los try catch
 		
 		this.nombreReal = nombreReal;
 		this.nombrePersonaje = nombrePersonaje;
 		this.atributoInicial = Atributo.VELOCIDAD;
+		this.bando = bando;
 		
 		caracteristicas.put(Atributo.VELOCIDAD,velocidad);
 		caracteristicas.put(Atributo.FUERZA,fuerza);
@@ -51,8 +52,11 @@ public class Personaje implements Competidor{
 		this.nombrePersonaje = nombrePersonaje;
 	}
 	
+	public String getBando() {
+		return this.bando;
+	}
+	
 	public boolean esGanador(Atributo atributo, Competidor contrincante) {
-		//habria que chequear que los personajes pertenezcan al juego?
 		this.atributoInicial = atributo;
 		return this.compareTo(contrincante) > 0;
 

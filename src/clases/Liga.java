@@ -121,6 +121,8 @@ public class Liga implements Competidor{
 		return suma;
 	}
 	
+	
+	
 	public int cantidadDeCompetidores() {
 		return this.integrantes.size();
 		

@@ -14,13 +14,15 @@ import java.util.Map.Entry;
 import java.util.LinkedList;
 import java.util.Scanner;
 
+import excepciones.FormatoArchivoIncorrecto;
+import excepciones.FormatoCamposIncorrecto;
 import excepciones.PerteneceALigaException;
 import excepciones.CompetidorNoPerteneceAlJuego;
 import excepciones.LigaYaExiste;
 
 public class Juego {
 
-	List<Personaje> competidores = new LinkedList<Personaje>();
+
 	BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
 	Menu menu = new Menu();
 
@@ -65,44 +67,80 @@ public class Juego {
 	}
 
 	
-	public void cargarPersonajesDesdeArchivo(String path) {
+	public void cargarPersonajesDesdeArchivo(String path) throws FormatoArchivoIncorrecto {
 		try {
 			FileReader archivo = new FileReader(path);
 			BufferedReader lector = new BufferedReader(archivo);
-			String linea;
-			while ((linea = lector.readLine()) != null) {
-
+			String linea = null;
+			linea = lector.readLine();
+			
+			if (linea == null )
+			{
+				throw new FormatoArchivoIncorrecto("El formato de archivo no es correcto");
+			}
+			
+				
+			while (linea != null) {
 				String[] data = linea.split(",");
+				try {
+					String tipoHeroe = data[0].trim();
+				
+					if (!tipoHeroe.equals("Héroe") && !tipoHeroe.equals("Villano") )
+					{
+						throw new FormatoCamposIncorrecto("El formato del campo no es correcto");
+					}
+					String nombreReal = data[1].trim();				
+					String nombrePersonaje = data[2].trim();
+				
+					if (nombreReal.equals("") || nombrePersonaje.equals("")|| nombreReal == null || nombrePersonaje == null )
+					{
+						throw new FormatoCamposIncorrecto("El formato del campo no es correcto");
+					}
+				
+					Integer velocidad = Integer.parseInt(data[3].trim());
+					Integer fuerza = Integer.parseInt(data[4].trim());
+					Integer resistencia = Integer.parseInt(data[5].trim());
+					Integer destreza = Integer.parseInt(data[6].trim());
 
-				if (data[0].equals("Héroe")) {
-					Personaje h = new Personaje(data[1].trim(), data[2].trim(), Integer.parseInt(data[3].trim()),
-							Integer.parseInt(data[4].trim()), Integer.parseInt(data[5].trim()),
-							Integer.parseInt(data[6].trim()));
+					if (tipoHeroe.equals("Héroe")) {
+						Personaje h = new Personaje(nombreReal, nombrePersonaje,velocidad,
+								fuerza, resistencia,
+								destreza);
 
-					heroes.put(data[2].trim(), h); //creo que la key tiene que ser el nmbre de personaje porque es es el que se pasa en ligas.in
-					this.competidores.add(h);
+						heroes.put(nombrePersonaje.trim(), h); //creo que la key tiene que ser el nmbre de personaje porque es es el que se pasa en ligas.in
+						
 
-				}
-				if (data[0].equals("Villano")) {
-					Personaje v = new Personaje(data[1].trim(), data[2].trim(), Integer.parseInt(data[3].trim()),
-							Integer.parseInt(data[4].trim()), Integer.parseInt(data[5].trim()),
-							Integer.parseInt(data[6].trim()));
+					}
+					if (tipoHeroe.equals("Villano")) {
+						Personaje v = new Personaje(nombreReal, nombrePersonaje,velocidad,
+								fuerza, resistencia,
+								destreza);
 					
-					//System.out.println(data[2]);
-					villanos.put(data[2].trim(), v);
-					this.competidores.add(v);
+					
+						villanos.put(nombrePersonaje, v);
+						
+					}
+
+				}catch (Exception e){
+					System.err.println(e);
 				}
+				
+				
+				linea = lector.readLine();
 
 			}
 			if (lector != null) {
 				lector.close();
 			}
 
-		} catch (Exception e) {
+		} catch (IOException e) {
+			
 			System.err.println(e);
 		}
 
 	}
+
+
 
 	public void cargarPersonajesManualmente() {
 
@@ -177,33 +215,66 @@ public class Juego {
 		}
 
 	}
+	
+	public void listarPersonajes() {
+		List<Competidor> competidores = obtenerListaDeCompetidores();
+		Iterator <Competidor> it = competidores.iterator();
+		
+		while(it.hasNext()) {
+			System.out.println(it.next().toString());
+		}
+		
+	}
 
-	public void listarPersonajesPorMultiplesCaracteristicas() {
-		Atributo atributo1;
-		Atributo atributo2;
+	public String listarPersonajesQueVenzanAUno() throws CompetidorNoPerteneceAlJuego, LigaYaExiste{
 
-		System.out.println("CARACTERISTICAS: listado de caracteristicas");
+		String lista = "";
 
 		try {
-			String attr1 = mostrarMensaje("Primer atributo");
-			String attr2 = mostrarMensaje("Segundo atributo");
-
-			atributo1 = Atributo.valueOf(attr1.toUpperCase());
-			atributo2 = Atributo.valueOf(attr2.toUpperCase());
-			if (atributo1 == atributo2) {
-				atributo2 = Atributo.valueOf(mostrarMensaje("Debe elegir una caracteristica distinta"));
+			String nombre = mostrarMensaje("Nombre retador");
+			verificarExistencia(nombre);
+			Competidor retador = obtenerCompetidor(nombre);
+			String attr2 = mostrarMensaje("Elegir atributo");
+			
+			Atributo atributo = Atributo.valueOf(attr2.toUpperCase());
+			List<Competidor> competidores = obtenerListaDeCompetidores();
+			Iterator <Competidor> it = competidores.iterator();
+			
+			while(it.hasNext()) {
+				Competidor contendiente = it.next();
+				if(contendiente.getCaracteristicas().get(atributo) > retador.getCaracteristicas().get(atributo))
+					lista += contendiente.toString() + "\n";
 			}
-
-			Comparator<Personaje> comp = new ComparadorPorAtributo(atributo1, atributo2);
-
-			this.competidores.sort(comp);
 		} catch (NumberFormatException | IOException e) {
 			System.err.println("Opcion ingresada invalida");
 		}
+		return lista;
+	}
+	
+	
+	public String listarPersonajesPorMultiplesCaracteristicas(String attr1, String attr2, int orden) throws IOException{
+		
+		Atributo atributo1;
+		Atributo atributo2;
+		List<Competidor> competidores = obtenerListaDePersonajes();
+		String lista = "";
+		
+		
+		atributo1 = Atributo.valueOf(attr1.toUpperCase());
+		atributo2 = Atributo.valueOf(attr2.toUpperCase());
 
-		for (Personaje p : this.competidores) {
-			System.out.println(p.toString());
+		System.out.println("CARACTERISTICAS: " + atributo1 + " / " + atributo2);
+		
+		Comparator<Competidor> comp = new ComparadorPorAtributo(atributo1, atributo2, orden);
+
+		competidores.sort(comp);
+		
+		for (Competidor p : competidores) {
+			lista += (p.toString()) +  " " + p.getCaracteristicas().get(atributo1) + " " + p.getCaracteristicas().get(atributo2) + "\n";
 		}
+
+		return lista;
+
 	}
     
 	
@@ -211,7 +282,8 @@ public class Juego {
 	 * pre: no se puede crear una liga ya existente ni con personajes que no existan
 	 * en el archivo de personajes
 	 */
-	private void cargarLigas(String[] data)throws PerteneceALigaException, CompetidorNoPerteneceAlJuego, LigaYaExiste{
+
+	private void cargarLigas(String[] data)throws PerteneceALigaException, LigaYaExiste, CompetidorNoPerteneceAlJuego{
 		String nombreLiga = data[0].trim();
 		HashMap<String, Competidor> ligaAAgregar = null;
 		HashMap<String, Personaje> tipoAchequear = null;
@@ -239,52 +311,71 @@ public class Juego {
 			for (int i = 1; i < data.length; i++) {
 				
 				nombreCompetidor = data[i].trim();
-			
 				
-				if(tipoAchequear.containsKey(nombreCompetidor)) {
-					competidor = tipoAchequear.get(nombreCompetidor);
-					for (String key : ligaAAgregar.keySet()) {
-						if (ligaAAgregar.get(key).pertenece(tipoAchequear.get(nombreCompetidor))){
-							Liga ligaM = (Liga) ligaAAgregar.get(key);
+				try{
+					if(tipoAchequear.containsKey(nombreCompetidor)) {
+						competidor = tipoAchequear.get(nombreCompetidor);
+						for (String key : ligaAAgregar.keySet()) {
+							if (ligaAAgregar.get(key).pertenece(tipoAchequear.get(nombreCompetidor))){
+								Liga ligaM = (Liga) ligaAAgregar.get(key);
 							
-							throw new PerteneceALigaException("El competidor ya pertenece a una liga");
+								throw new PerteneceALigaException("El competidor " + nombreCompetidor + " ya pertenece a una liga");
 							
+							}
 						}
 					}
-				}
 					
-				if(ligaAAgregar.containsKey(nombreCompetidor)) 
-					competidor = ligaAAgregar.get(nombreCompetidor); //SI es una liga, tiene que estar ya cargada tambien
-			
-				if (competidor == null) throw new CompetidorNoPerteneceAlJuego("El competidor no pertenece al Juego"); 
-				listaCompetidores.add(competidor);
+					if(ligaAAgregar.containsKey(nombreCompetidor)) 
+						competidor = ligaAAgregar.get(nombreCompetidor); //SI es una liga, tiene que estar ya cargada tambien
+				
+					if (competidor == null) throw new CompetidorNoPerteneceAlJuego("El competidor " + nombreCompetidor + " no pertenece al Juego"); 
+					listaCompetidores.add(competidor);
+					
+				} catch (CompetidorNoPerteneceAlJuego e){
+						System.err.println(e.getMessage());
+				}
+				catch (PerteneceALigaException e){
+					System.err.println(e.getMessage());
+			    }
+				
+				
 			}
 			
 			liga = new Liga(nombreLiga, listaCompetidores);
 			ligaAAgregar.put(nombreLiga, liga);
+			
+			
 		}else
 		{
 			throw new LigaYaExiste("La liga ya existe"); 
 		}		
 	}
+		
 	
-	
-	public void cargarLigaDesdeArchivo(String path) throws IOException {
+	public void cargarLigaDesdeArchivo(String path) throws IOException, FormatoArchivoIncorrecto, PerteneceALigaException, CompetidorNoPerteneceAlJuego, LigaYaExiste {
 		FileReader archivo = new FileReader(path);
 		BufferedReader lector = new BufferedReader(archivo);
 		
 		try {
-			String linea;
+			String linea = null;
+            linea = lector.readLine();
 			
-			while ((linea = lector.readLine()) != null) {
+			if (linea == null )
+			{
+				throw new FormatoArchivoIncorrecto("El formato de archivo no es correcto");
+			}
+			
+			
+			while (linea != null) {
 				String[] data = linea.split(",");
 				cargarLigas(data);
+				linea = lector.readLine();
 			}
-			    // mostrar las ligas creadas:
 			    mostrarLigas();
 			    
-		} catch (Exception e) {
+		} catch (IOException e) {
 			   //e.printStackTrace();
+
 			   System.err.println(e);
 		}
 
@@ -297,8 +388,8 @@ public class Juego {
 
 	public void mostrarLigas() {
 		
-		System.out.println("Ligas de heroes en juego" + ligaDeHeroes.keySet().toString());
-		System.out.println("Ligas de villanos en juego" + ligaDeVillanos.keySet().toString());
+		System.out.println("Ligas de heroes en juego" + ligaDeHeroes.keySet().toString() + "\n");
+		System.out.println("Ligas de villanos en juego" + ligaDeVillanos.keySet().toString() + "\n");
 		
 		
 	}
@@ -341,21 +432,21 @@ public class Juego {
 		
 		try {	
 			System.out.println("Nombre de retador\n");
-			String nombreRetador = br.readLine();
-			verificarExistencia(nombreRetador);
+			String nombre = br.readLine();
+			Competidor retador = obtenerCompetidor(nombre);
 			
 			System.out.println("Nombre de contrincante\n");
-			String nombreContrincante = br.readLine();
-			verificarExistencia(nombreContrincante);
+			nombre = br.readLine();
+			Competidor contrincante = obtenerCompetidor(nombre);
 
 			System.out.println("Indique atributo\n");
 			String attr = br.readLine().toUpperCase();
 			Atributo atributo = Atributo.valueOf(attr);
 			
-			if(obtenerDeUnBando(nombreRetador).esGanador(atributo, obtenerDeUnBando(nombreContrincante)))
-				ganador += nombreRetador;
-			else if(obtenerDeUnBando(nombreRetador).esGanador(atributo, obtenerDeUnBando(nombreContrincante)))
-				ganador += nombreContrincante;
+			if(retador.esGanador(atributo, contrincante))
+				ganador += retador.getNombre();
+			else if(retador.esGanador(atributo, contrincante))
+				ganador += contrincante.getNombre();
 			else
 				ganador = "Empate";
 			
@@ -374,23 +465,67 @@ public class Juego {
 		menu.generarMenu(this);
 	}
 
+	
+	//================== Metodos Privados ====================================
+	
+	
+	
 	private String mostrarMensaje(String opciones) throws NumberFormatException, IOException {
 		System.out.println(opciones + "\n");
 		return input.readLine();
 	}
 	
-	private Competidor obtenerDeUnBando(String nombre) {
+	private Competidor obtenerCompetidor(String nombre)throws CompetidorNoPerteneceAlJuego {
+		verificarExistencia(nombre);
 		if(heroes.containsKey(nombre))
 			return heroes.get(nombre);
 	
 		return villanos.get(nombre);
 	}
 	
-	private void verificarExistencia(String nombreCompetidor)throws CompetidorNoPerteneceAlJuego, LigaYaExiste {
-		if(!heroes.containsKey(nombreCompetidor) && !villanos.containsKey(nombreCompetidor))
+	private void verificarExistencia(String nombreCompetidor)throws CompetidorNoPerteneceAlJuego{
+		if(!heroes.containsKey(nombreCompetidor) && !ligaDeHeroes.containsKey(nombreCompetidor) 
+				&& !villanos.containsKey(nombreCompetidor) && !ligaDeVillanos.containsKey(nombreCompetidor))
 			throw new CompetidorNoPerteneceAlJuego("El competidor no pertenece al Juego");
+	}
+	
+	private void verificarExistenciaLiga(String nombreCompetidor)throws LigaYaExiste{
 		if(ligaDeHeroes.containsKey(nombreCompetidor) || ligaDeVillanos.containsKey(nombreCompetidor))
 			throw new LigaYaExiste("La liga ya existe");
+	}
+	
+	private List<Competidor> obtenerListaDeCompetidores(){
+		List<Competidor> competidores = new LinkedList();
 		
+		for(Map.Entry<String,Personaje> entry : villanos.entrySet()) {
+			competidores.add(entry.getValue());
+		}
+		
+		for(Map.Entry<String,Personaje> entry : heroes.entrySet()) {
+			competidores.add(entry.getValue());
+		}
+		
+		for(Map.Entry<String,Competidor> entry : ligaDeVillanos.entrySet()) {
+			competidores.add(entry.getValue());
+		}
+		
+		for(Map.Entry<String,Competidor> entry : ligaDeHeroes.entrySet()) {
+			competidores.add(entry.getValue());
+		}
+		
+		return competidores;
+	}
+	
+	private List<Competidor> obtenerListaDePersonajes(){
+		List<Competidor> personajes = new LinkedList();
+		
+		for(Map.Entry<String,Personaje> entry : villanos.entrySet()) {
+			personajes.add(entry.getValue());
+		}
+		
+		for(Map.Entry<String,Personaje> entry : heroes.entrySet()) {
+			personajes.add(entry.getValue());
+		}
+		return personajes;
 	}
 }

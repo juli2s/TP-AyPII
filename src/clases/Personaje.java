@@ -67,6 +67,7 @@ public class Personaje implements Competidor{
 	@Override
 	public String toString() {
 		return this.nombrePersonaje;
+
 	}
 	
 	

@@ -2,3 +2,4 @@ ligaDeHeroesTest, The Comedian
 losMinchis, SuperIta, Tormenta
 SuperMinchis, YuriGagari, losMinchis
 ligaDeVillanosTest, Ozymandias
+ligaDePelea, The Comedian, SuperFer

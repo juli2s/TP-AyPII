@@ -1,6 +1,8 @@
-Anastasia
-The Comedian
-Ozymandias
-Héroe,Lagartija, Anastasia, , 150, 50, 200, 100
-Héroe,Edward Blake, The Comedian, , 150, 50, 200, 100
-Villano,Adrian Veidt, Ozymandias, , 200, 200, 180, 120
+Héroe, Fer, SuperFer, , 40, 60, 30, 40
+Héroe, Luna, Mamina, , 80, 57, 100, 50
+Héroe, Edward Blake, The Comedian, , 150, 50, 200, 100
+Héroe, Romi, SuperRomi, , 40, 60, 30, 50
+Villano, Chiquita, Tormenta, , 140, 60, 30, 40
+Villano, Ita, SuperIta, , 140, 60, 30, 50
+Villano, Adrian Veidt2, Ozymandias, , 200, 200, 180, 120
+Villano, Yuri, YuriGagari, , 40, 60, 30, 40

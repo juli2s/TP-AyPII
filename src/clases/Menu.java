@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import excepciones.CompetidorNoPerteneceAlJuego;
+import excepciones.ContrincantesIncompatibles;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -64,7 +65,7 @@ public class Menu {
 						juego.cargarLigaDesdeArchivo(ruta);
 						break;
 					case 2:
-						System.out.println("metodo para cargar Ligas manualmente");
+						juego.cargarLigasManualmente();
 						break;
 					case 3:
 						juego.guardarLigasEnArchivo(true);
@@ -86,8 +87,10 @@ public class Menu {
 					case 1:
 						try {
 						System.out.println(juego.pelear());
-						}catch(Exception CompetidorNoPerteneceAlJuego) {
-							System.out.println("El personaje no existe");
+						}catch(CompetidorNoPerteneceAlJuego e) {
+							System.err.println("El personaje no existe");
+						}catch(ContrincantesIncompatibles e) {
+							System.err.println("Los peleadores no pueden ser del mismo bando");
 						}
 						break;
 					case 2:

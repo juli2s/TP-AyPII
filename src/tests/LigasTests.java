@@ -20,13 +20,13 @@ public class LigasTests {
 	   Personaje jugador4;
 	   Personaje jugador5;
 	
-	   jugador1 = new Personaje("Romi", "SuperRomi", 50 ,30 ,40, 60);
-	   jugador2 = new Personaje("Fer", "SuperFer", 40 ,30 ,40, 60);
+	   jugador1 = new Personaje("Romi", "SuperRomi", 50 ,30 ,40, 60, "Heroe");
+	   jugador2 = new Personaje("Fer", "SuperFer", 40 ,30 ,40, 60, "Heroe");
 
-	   jugador3 = new Personaje("Ita", "SuperIta", 50 ,30 ,40, 60);
-	   jugador4 = new Personaje("Chiquita", "Tormenta", 40 ,30 ,40, 60);
+	   jugador3 = new Personaje("Ita", "SuperIta", 50 ,30 ,40, 60, "Villano");
+	   jugador4 = new Personaje("Chiquita", "Tormenta", 40 ,30 ,40, 60, "Villano");
 	   
-	   jugador5 = new Personaje("Yuri", "YuriGagari", 40 ,30 ,40, 60);
+	   jugador5 = new Personaje("Yuri", "YuriGagari", 40 ,30 ,40, 60, "Villano");
 	   
 	   List<Competidor> listaLiga1 = new LinkedList();
 	   
@@ -50,13 +50,13 @@ public class LigasTests {
 	   Personaje jugador4;
 	   Personaje jugador5;
 	
-	   jugador1 = new Personaje("Romi", "SuperRomi", 50 ,30 ,40, 60);
-	   jugador2 = new Personaje("Fer", "SuperFer", 40 ,30 ,40, 60);
+	   jugador1 = new Personaje("Romi", "SuperRomi", 50 ,30 ,40, 60, "Heroe");
+	   jugador2 = new Personaje("Fer", "SuperFer", 40 ,30 ,40, 60, "Heroe");
 
-	   jugador3 = new Personaje("Ita", "SuperIta", 50 ,30 ,40, 60);
-	   jugador4 = new Personaje("Chiquita", "Tormenta", 40 ,30 ,40, 60);
+	   jugador3 = new Personaje("Ita", "SuperIta", 50 ,30 ,40, 60, "Villano");
+	   jugador4 = new Personaje("Chiquita", "Tormenta", 40 ,30 ,40, 60, "Villano");
 	   
-	   jugador5 = new Personaje("Yuri", "YuriGagari", 40 ,30 ,40, 60);
+	   jugador5 = new Personaje("Yuri", "YuriGagari", 40 ,30 ,40, 60, "Villano");
 	   
 	   List<Competidor> listaLiga1 = new LinkedList();
 	   
@@ -80,13 +80,13 @@ public class LigasTests {
 	   Personaje jugador4;
 	   Personaje jugador5;
 	
-	   jugador1 = new Personaje("Romi", "SuperRomi", 50 ,30 ,40, 60);
-	   jugador2 = new Personaje("Fer", "SuperFer", 40 ,30 ,40, 60);
+	   jugador1 = new Personaje("Romi", "SuperRomi", 50 ,30 ,40, 60, "Heroe");
+	   jugador2 = new Personaje("Fer", "SuperFer", 40 ,30 ,40, 60, "Heroe");
 
-	   jugador3 = new Personaje("Ita", "SuperIta", 50 ,30 ,40, 60);
-	   jugador4 = new Personaje("Chiquita", "Tormenta", 40 ,30 ,40, 60);
+	   jugador3 = new Personaje("Ita", "SuperIta", 50 ,30 ,40, 60, "Villano");
+	   jugador4 = new Personaje("Chiquita", "Tormenta", 40 ,30 ,40, 60, "Villano");
 	   
-	   jugador5 = new Personaje("Yuri", "YuriGagari", 40 ,30 ,40, 60);
+	   jugador5 = new Personaje("Yuri", "YuriGagari", 40 ,30 ,40, 60, "Villano");
 	   
 	   List<Competidor> listaLiga1 = new LinkedList();
 	   
@@ -117,13 +117,13 @@ public class LigasTests {
 	   Personaje jugador4;
 	   Personaje jugador5;
 	
-	   jugador1 = new Personaje("Romi", "SuperRomi", 50 ,30 ,40, 60);
-	   jugador2 = new Personaje("Fer", "SuperFer", 40 ,30 ,40, 60);
+	   jugador1 = new Personaje("Romi", "SuperRomi", 50 ,30 ,40, 60, "Heroe");
+	   jugador2 = new Personaje("Fer", "SuperFer", 40 ,30 ,40, 60, "Heroe");
 
-	   jugador3 = new Personaje("Ita", "SuperIta", 50 ,30 ,40, 60);
-	   jugador4 = new Personaje("Chiquita", "Tormenta", 40 ,30 ,40, 60);
+	   jugador3 = new Personaje("Ita", "SuperIta", 50 ,30 ,40, 60, "Villano");
+	   jugador4 = new Personaje("Chiquita", "Tormenta", 40 ,30 ,40, 60, "Villano");
 	   
-	   jugador5 = new Personaje("Yuri", "YuriGagari", 40 ,30 ,40, 60);
+	   jugador5 = new Personaje("Yuri", "YuriGagari", 40 ,30 ,40, 60, "Villano");
 	   
 	   List<Competidor> listaLiga1 = new LinkedList();
 	   
@@ -195,13 +195,13 @@ public class LigasTests {
 	   Personaje jugador4;
 	   Personaje jugador5;
 	
-	   jugador1 = new Personaje("Romi", "SuperRomi", 50 ,30 ,40, 60);
-	   jugador2 = new Personaje("Fer", "SuperFer", 40 ,30 ,40, 60);
+	   jugador1 = new Personaje("Romi", "SuperRomi", 50 ,30 ,40, 60, "Heroe");
+	   jugador2 = new Personaje("Fer", "SuperFer", 40 ,30 ,40, 60, "Heroe");
 
-	   jugador3 = new Personaje("Ita", "SuperIta", 50 ,30 ,40, 60);
-	   jugador4 = new Personaje("Chiquita", "Tormenta", 40 ,30 ,40, 60);
+	   jugador3 = new Personaje("Ita", "SuperIta", 50 ,30 ,40, 60, "Villano");
+	   jugador4 = new Personaje("Chiquita", "Tormenta", 40 ,30 ,40, 60, "Villano");
 	   
-	   jugador5 = new Personaje("Yuri", "YuriGagari", 40 ,30 ,40, 60);
+	   jugador5 = new Personaje("Yuri", "YuriGagari", 40 ,30 ,40, 60, "Villano");
 	   
 	   List<Competidor> listaLiga1 = new LinkedList();
 	   
@@ -276,13 +276,13 @@ public class LigasTests {
 	   Personaje jugador4;
 	   Personaje jugador5;
 	
-	   jugador1 = new Personaje("Romi", "SuperRomi", 700 ,30 ,40, 60);
-	   jugador2 = new Personaje("Fer", "SuperFer", 40 ,30 ,40, 60);
+	   jugador1 = new Personaje("Romi", "SuperRomi", 700 ,30 ,40, 60, "Heroe");
+	   jugador2 = new Personaje("Fer", "SuperFer", 40 ,30 ,40, 60, "Heroe");
 
-	   jugador3 = new Personaje("Ita", "SuperIta", 50 ,30 ,40, 60);
-	   jugador4 = new Personaje("Chiquita", "Tormenta", 40 ,30 ,40, 60);
+	   jugador3 = new Personaje("Ita", "SuperIta", 50 ,30 ,40, 60, "Villano");
+	   jugador4 = new Personaje("Chiquita", "Tormenta", 40 ,30 ,40, 60, "Villano");
 	   
-	   jugador5 = new Personaje("Yuri", "YuriGagari", 40 ,30 ,40, 60);
+	   jugador5 = new Personaje("Yuri", "YuriGagari", 40 ,30 ,40, 60, "Villano");
 	   
 	   List<Competidor> listaLiga1 = new LinkedList();
 	   
@@ -312,13 +312,13 @@ public class LigasTests {
 	   Personaje jugador4;
 	   Personaje jugador5;
 	
-	   jugador1 = new Personaje("Romi", "SuperRomi", 7 ,30 ,140, 60);
-	   jugador2 = new Personaje("Fer", "SuperFer", 40 ,30 ,40, 60);
+	   jugador1 = new Personaje("Romi", "SuperRomi", 7 ,30 ,140, 60, "Heroe");
+	   jugador2 = new Personaje("Fer", "SuperFer", 40 ,30 ,40, 60, "Heroe");
 
-	   jugador3 = new Personaje("Ita", "SuperIta", 50 ,15 ,40, 60);
-	   jugador4 = new Personaje("Chiquita", "Tormenta", 15 ,30 ,40, 60);
+	   jugador3 = new Personaje("Ita", "SuperIta", 50 ,15 ,40, 60, "Villano");
+	   jugador4 = new Personaje("Chiquita", "Tormenta", 15 ,30 ,40, 60, "Villano");
 	   
-	   jugador5 = new Personaje("Yuri", "YuriGagari", 40 ,30 ,40, 60);
+	   jugador5 = new Personaje("Yuri", "YuriGagari", 40 ,30 ,40, 60, "Villano");
 	   
 	   List<Competidor> listaLiga1 = new LinkedList();
 	   
@@ -348,13 +348,13 @@ public class LigasTests {
 	   Personaje jugador4;
 	   Personaje jugador5;
 	
-	   jugador1 = new Personaje("Romi", "SuperRomi", 7 ,30 ,140, 60);
-	   jugador2 = new Personaje("Fer", "SuperFer", 40 ,30 ,40, 60);
+	   jugador1 = new Personaje("Romi", "SuperRomi", 7 ,30 ,140, 60, "Heroe");
+	   jugador2 = new Personaje("Fer", "SuperFer", 40 ,30 ,40, 60, "Heroe");
 
-	   jugador3 = new Personaje("Ita", "SuperIta", 50 ,135 ,40, 60);
-	   jugador4 = new Personaje("Chiquita", "Tormenta", 35 ,35 ,40, 60);
+	   jugador3 = new Personaje("Ita", "SuperIta", 50 ,135 ,40, 60, "Villano");
+	   jugador4 = new Personaje("Chiquita", "Tormenta", 35 ,35 ,40, 60, "Villano");
 	   
-	   jugador5 = new Personaje("Yuri", "YuriGagari", 40 ,30 ,40, 60);
+	   jugador5 = new Personaje("Yuri", "YuriGagari", 40 ,30 ,40, 60, "Villano");
 	   
 	   
 	   

@@ -63,7 +63,7 @@ public class CargarLigasDesdeArchivoTest {
 			
 		   j.cargarLigaDesdeArchivo("./src/tests/ligas1.txt");
 		  
-		   Competidor jugador1 = new Personaje("Edward Blake", "The Comedian", 50 ,10 ,40, 70);
+		   Competidor jugador1 = new Personaje("Edward Blake", "The Comedian", 50 ,10 ,40, 70, "Heroe");
 		   
 		   Assert.assertTrue(j.getLigaDeHeroes().get("Watchmen").pertenece(jugador1));
 		   
@@ -78,7 +78,7 @@ public class CargarLigasDesdeArchivoTest {
 			
 		   j.cargarLigaDesdeArchivo("./src/tests/ligas6.txt");
 		  
-		   Competidor jugador1 = new Personaje("Edward Blake", "The Comedian", 50 ,10 ,40, 70);
+		   Competidor jugador1 = new Personaje("Edward Blake", "The Comedian", 50 ,10 ,40, 70, "Heroe");
 		   
 		   Assert.assertTrue(j.getLigaDeHeroes().get("Watchmen").pertenece(jugador1));
 		   
@@ -94,7 +94,7 @@ public class CargarLigasDesdeArchivoTest {
 		   j.cargarLigaDesdeArchivo("./src/tests/ligas6.txt");
 		   j.cargarLigaDesdeArchivo("./src/tests/ligas7.txt");
 		  
-		   Competidor jugador1 = new Personaje("Edward Blake", "The Comedian", 50 ,10 ,40, 70);
+		   Competidor jugador1 = new Personaje("Edward Blake", "The Comedian", 50 ,10 ,40, 70, "Heroe");
 		   
 		   Assert.assertTrue(j.getLigaDeHeroes().get("Watchmen").pertenece(jugador1));
 		   
@@ -110,7 +110,7 @@ public class CargarLigasDesdeArchivoTest {
 		   j.cargarLigaDesdeArchivo("./src/tests/ligas6.txt");
 		   j.cargarLigaDesdeArchivo("./src/tests/ligas6.txt");
 		  
-		   Competidor jugador1 = new Personaje("Edward Blake", "The Comedian", 50 ,10 ,40, 70);
+		   Competidor jugador1 = new Personaje("Edward Blake", "The Comedian", 50 ,10 ,40, 70, "Heroe");
 		   
 		   Assert.assertTrue(j.getLigaDeHeroes().get("Watchmen").pertenece(jugador1));
 		   
@@ -127,8 +127,8 @@ public class CargarLigasDesdeArchivoTest {
 		   j.cargarPersonajesDesdeArchivo("./src/tests/personajes2.txt");
 		   j.cargarLigaDesdeArchivo("./src/tests/ligas2.txt");
 		   
-           Personaje jugador1 = new Personaje("Adrian Veidt2", "Ozymandias", 50 ,10 ,40, 70);
-           Personaje jugador2 = new Personaje("Edward Blake", "The Comedian", 50 ,10 ,40, 70);
+           Personaje jugador1 = new Personaje("Adrian Veidt2", "Ozymandias", 50 ,10 ,40, 70, "Villano");
+           Personaje jugador2 = new Personaje("Edward Blake", "The Comedian", 50 ,10 ,40, 70, "Heroe");
 
            
 		   
@@ -166,7 +166,7 @@ public class CargarLigasDesdeArchivoTest {
 		 j.cargarPersonajesDesdeArchivo("./src/tests/personajes4.txt");
 		 j.cargarLigaDesdeArchivo("./src/tests/ligas4.txt");
 		   
-         Personaje jugador1 = new Personaje("Chiquita", "Tormenta", 50 ,10 ,40, 70);
+         Personaje jugador1 = new Personaje("Chiquita", "Tormenta", 50 ,10 ,40, 70, "Villano");
 		   
 		  Assert.assertTrue(j.getLigaDeVillanos().get("SuperMinchis").pertenece(jugador1));
 			
@@ -184,8 +184,8 @@ public class CargarLigasDesdeArchivoTest {
 		 j.cargarPersonajesDesdeArchivo("./src/tests/personajes5.txt");
 		 j.cargarLigaDesdeArchivo("./src/tests/ligas5.txt");
 		   
-         Personaje jugador1 = new Personaje("Yuri", "YuriGagari", 50 ,10 ,40, 70);
-         Personaje jugador2 = new Personaje("Ita", "SuperIta", 50 ,10 ,40, 70);
+         Personaje jugador1 = new Personaje("Yuri", "YuriGagari", 50 ,10 ,40, 70, "Villano");
+         Personaje jugador2 = new Personaje("Ita", "SuperIta", 50 ,10 ,40, 70, "Villano");
 		   
 		   boolean perteneceVillano= j.getLigaDeVillanos().get("SuperMinchis").pertenece(jugador1);
 		   boolean perteneceVillano2 = j.getLigaDeVillanos().get("SuperMinchis").pertenece(jugador2);

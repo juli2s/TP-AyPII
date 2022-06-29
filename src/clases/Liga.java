@@ -34,16 +34,12 @@ public class Liga implements Competidor{
 	}
 	
 	public String toString() {
-		String result = "";
-		int contador = 0;
-		for(Competidor c : integrantes) {
-			if (contador == 0)
-			{
-				result += c.getNombre();
-			}else{
-				result += ", " + c.getNombre();
-			}
-			contador++;
+		String result = integrantes.get(0).getNombre();
+
+		for(int i = 1; i < integrantes.size(); i++) {
+			
+			result += ", " + integrantes.get(i).getNombre();
+
 		}
 		
 		return  this.nombreLiga +", "  + result;
@@ -60,6 +56,10 @@ public class Liga implements Competidor{
 	
 	public String getNombre() {
 		return nombreLiga;
+	}
+	
+	public String getBando() {
+		return integrantes.get(0).getBando();
 	}
 	
 	

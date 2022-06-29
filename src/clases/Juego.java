@@ -130,6 +130,7 @@ public class Juego {
 
 			}
 			if (lector != null) {
+				System.out.println("Personajes cargados...");
 				lector.close();
 			}
 
@@ -194,18 +195,18 @@ public class Juego {
 				Map.Entry<String, Personaje> entrada = (Entry<String, Personaje>) iteratorHeroes.next();
 				Personaje p = entrada.getValue();
 				if(!mostrar) {					
-					writer.write(p.toString() + "\n");
+					writer.write("Héroe, " + p.mostrarPersonaje() + "\n");
 				}else {
-					System.out.println(p.toString());
+					System.out.println(p.mostrarPersonaje());
 				}
 			}
 			while (iteratorVillanos.hasNext()) {
 				Map.Entry<String, Personaje> entrada = (Entry<String, Personaje>) iteratorVillanos.next();
 				Personaje p = entrada.getValue();
 				if(!mostrar) {					
-					writer.write(p.toString() + "\n");
+					writer.write("Villano, " + p.mostrarPersonaje() + "\n");
 				}else {
-					System.out.println(p.toString());
+					System.out.println(p.mostrarPersonaje());
 				}
 			}
 			System.out.println("Guardado completo...");

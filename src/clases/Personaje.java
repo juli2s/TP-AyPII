@@ -71,6 +71,15 @@ public class Personaje implements Competidor{
 	}
 	
 	
+	public String mostrarPersonaje() {
+		String result = "";
+		for(Integer c : caracteristicas.values()) {
+			result += ", " + c.toString();
+		}
+		
+		return  this.nombreReal +", " + this.nombrePersonaje + ", " + result;
+	}
+	
 	public int compareTo(Competidor other) {
 
 		Atributo atributo = this.atributoInicial;

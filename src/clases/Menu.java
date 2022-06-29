@@ -30,7 +30,7 @@ public class Menu {
 					case 1:
 						System.out.println("Ingrese la ruta del Archivo: \n");
 						ruta = input.readLine();
-						//juego.cargarPersonajesDesdeArchivo("./src/tests/personajes6.txt");
+
 						juego.cargarPersonajesDesdeArchivo(ruta);
 						break;
 					case 2:
@@ -59,7 +59,9 @@ public class Menu {
 										+ "3- Listar Ligas \n" + "4- Guardar Ligas en archivo \n" + "5- atrás\n")) {
 
 					case 1:
-						juego.cargarLigaDesdeArchivo("./src/ligas5.txt");
+						System.out.println("Ingrese la ruta del Archivo: \n");
+						ruta = input.readLine();
+						juego.cargarLigaDesdeArchivo(ruta);
 						break;
 					case 2:
 						System.out.println("metodo para cargar Ligas manualmente");
@@ -97,10 +99,11 @@ public class Menu {
 				break;
 			case 4:
 				while (opc != 3) {
-					switch (mostrarSubMenu("\n"+"1- Todos los personajes o ligas que venzan a un personaje dado para cierta caract\n"
-						+ " 2- Listado ordenado de personajes por mÃºltiples caracterÃ­sticas \n"+"3- atrÃ¡s\n")) {
+					switch (mostrarSubMenu("\n"+"1- Personajes o ligas que venzan a un personaje dado para cierta caract\n"
+						+ "2- Listado ordenado de personajes por múltiples características \n"+"3- atrás\n")) {
 					case 1:
 						try {
+					    	
 						String lista = juego.listarPersonajesQueVenzanAUno();
 						System.out.println(lista);
 						}

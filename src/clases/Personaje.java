@@ -67,8 +67,18 @@ public class Personaje implements Competidor{
 	@Override
 	public String toString() {
 		return this.nombrePersonaje;
+
 	}
 	
+	
+	public String mostrarPersonaje() {
+		String result = "";
+		for(Integer c : caracteristicas.values()) {
+			result += ", " + c.toString();
+		}
+		
+		return  this.nombreReal +", " + this.nombrePersonaje + ", " + result;
+	}
 	
 	public int compareTo(Competidor other) {
 

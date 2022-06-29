@@ -1,0 +1,7 @@
+Villano, Adrian Veidt2, Ozymandias, 120, 180, 200, 200
+Héroe, Edward Blake, The Comedian, 100, 200, 150, 50
+Héroe, Romi, SuperRomi, 50 ,30 ,100, 60
+Héroe, Fer,  SuperFer, 40 ,30 ,20, 60
+Villano, Ita, SuperIta, 50 ,30 ,50, 60
+Villano, Yuri, YuriGagari, 30 ,30 ,40, 80
+Villano, Chiquita, Tormenta, 40 ,30 ,40, 160

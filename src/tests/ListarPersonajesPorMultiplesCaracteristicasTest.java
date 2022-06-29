@@ -1,7 +1,14 @@
 package tests;
 
 import clases.Juego;
+
 import org.junit.*;
+
+import excepciones.CompetidorNoPerteneceAlJuego;
+import excepciones.FormatoArchivoIncorrecto;
+import excepciones.LigaYaExiste;
+import excepciones.PerteneceALigaException;
+
 import java.io.IOException;
 import java.util.List;
 import java.util.LinkedList;
@@ -9,7 +16,7 @@ import java.util.LinkedList;
 public class ListarPersonajesPorMultiplesCaracteristicasTest {
 
 	@Test
-	public void ordenadoDeMenorAMayorPorVelocidadYFuerza() throws IOException{
+	public void ordenadoDeMenorAMayorPorVelocidadYFuerza() throws IOException, FormatoArchivoIncorrecto, PerteneceALigaException, CompetidorNoPerteneceAlJuego, LigaYaExiste{
 
 		Juego j = Juego.getInstance();
 	   j.cargarPersonajesDesdeArchivo("./src/tests/personajes1.txt");
@@ -20,10 +27,10 @@ public class ListarPersonajesPorMultiplesCaracteristicasTest {
 	}
 
 	@Test
-	public void ordenadoDeMenorAMayorPorResistenciaYVelocidad() throws IOException{
+	public void ordenadoDeMenorAMayorPorResistenciaYVelocidad() throws IOException, FormatoArchivoIncorrecto{
 
 		Juego j = Juego.getInstance();
-	   j.cargarPersonajesDesdeArchivo("./src/tests/personajes6.txt");
+	   j.cargarPersonajesDesdeArchivo("./src/tests/personajes9.txt");
 	   
 	   String lista = "SuperFer 20 40\n"
 	   		+ "YuriGagari 40 30\n"
@@ -38,10 +45,10 @@ public class ListarPersonajesPorMultiplesCaracteristicasTest {
 	
 	
 	@Test
-	public void ordenadoDeMayorAMenorPorResistenciaYVelocidad() throws IOException{
+	public void ordenadoDeMayorAMenorPorResistenciaYVelocidad() throws IOException, FormatoArchivoIncorrecto{
 
 		Juego j = Juego.getInstance();
-	   j.cargarPersonajesDesdeArchivo("./src/tests/personajes6.txt");
+	   j.cargarPersonajesDesdeArchivo("./src/tests/personajes9.txt");
 	   
 	   String lista = "Ozymandias 200 120\n"
 	   		+ "The Comedian 150 100\n"

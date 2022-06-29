@@ -105,6 +105,8 @@ public class CargarLigasDesdeArchivoTest {
 	public void CargarUnaLigaExistente() throws IOException, FormatoArchivoIncorrecto, PerteneceALigaException, CompetidorNoPerteneceAlJuego, LigaYaExiste {
 		   Juego j = Juego.getInstance();
 		   j.cargarPersonajesDesdeArchivo("./src/tests/personajes6.txt");
+		   
+		   //System.out.println("pasa");
 			
 		   j.cargarLigaDesdeArchivo("./src/tests/ligas6.txt");
 		   j.cargarLigaDesdeArchivo("./src/tests/ligas6.txt");
@@ -135,8 +137,7 @@ public class CargarLigasDesdeArchivoTest {
 		   Assert.assertTrue(j.getLigaDeHeroes().get("ligaDeHeroesTest").pertenece(jugador2));
 		  
 		   j.resetearJugadores();
-		   //Assert.assertEquals(2, j.getLigaDeHeroes().keySet().size()); 
-		   //Assert.assertEquals(1, j.getLigaDeVillanos().keySet().size());
+		 
 	}
 	
 	@Test

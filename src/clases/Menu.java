@@ -8,25 +8,30 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Menu {
-	
-	
+
 	BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
+	String ruta;
+
 	public void generarMenu(Juego juego) throws NumberFormatException, IOException, CompetidorNoPerteneceAlJuego {
 		boolean salir = true;
 		int opc = 0;
 
 		do {
 			try {
-			switch (mostrarSubMenu(("\n"+"Menu principal: \n" + "1 - Administración de personajes  \n"
-					+ "2 - Administracion de ligas \n" + "3 - Combates \n" + "4 - Reportes \n" + "5- Salir \n"))) {
-			case 1:
-				while (opc != 5) {
+				switch (mostrarSubMenu(("\n" + "Menu principal: \n" + "1 - Administración de personajes  \n"
+						+ "2 - Administracion de ligas \n" + "3 - Combates \n" + "4 - Reportes \n" + "5- Salir \n"))) {
+				case 1:
+					while (opc != 5) {
 
-					switch (mostrarSubMenu("\n"+"1- Cargar personajes desde archivo \n" + "2- Cargar personaje manualmente \n"
-							+ "3- Listar personajes \n" + "4- Guardar personajes en archivo\n" + "5- atrás\n")) {
+						switch (mostrarSubMenu("\n" + "1- Cargar personajes desde archivo \n"
+								+ "2- Cargar personaje manualmente \n" + "3- Listar personajes \n"
+								+ "4- Guardar personajes en archivo\n" + "5- atrás \n")) {
 
 					case 1:
-						juego.cargarPersonajesDesdeArchivo("./src/tests/personajes6.txt");
+						System.out.println("Ingrese la ruta del Archivo: \n");
+						ruta = input.readLine();
+						//juego.cargarPersonajesDesdeArchivo("./src/tests/personajes6.txt");
+						juego.cargarPersonajesDesdeArchivo(ruta);
 						break;
 					case 2:
 						juego.cargarPersonajesManualmente();
@@ -35,20 +40,23 @@ public class Menu {
 						juego.listarPersonajes();
 						break;
 					case 4:
-						juego.guardarPersonajesEnArchivo();
+						juego.guardarPersonajesEnArchivo(false);
 						break;
 					case 5:
 						opc = 5;
 						generarMenu(juego);
-					}
-				}
-				opc = 0;
-				break;
-			case 2:
+						
+						}
 
-				while (opc != 5) {
-					switch (mostrarSubMenu("\n"+"1- Cargar ligas desde archivo \n" + "2- Cargar Ligas manualmente \n"
-							+ "3- Listar Ligas \n" + "4- Guardar Ligas en archivo \n" + "5- atrás\n")) {
+					}
+					opc = 0;
+					break;
+				case 2:
+
+					while (opc != 5) {
+						switch (mostrarSubMenu(
+								"\n" + "1- Cargar ligas desde archivo \n" + "2- Cargar Ligas manualmente \n"
+										+ "3- Listar Ligas \n" + "4- Guardar Ligas en archivo \n" + "5- atrás\n")) {
 
 					case 1:
 						juego.cargarLigaDesdeArchivo("./src/ligas5.txt");
@@ -57,10 +65,10 @@ public class Menu {
 						System.out.println("metodo para cargar Ligas manualmente");
 						break;
 					case 3:
-						System.out.println("metodo para listar Ligas");
+						juego.guardarLigasEnArchivo(true);
 						break;
 					case 4:
-						System.out.println("metodo para guardar Ligas en un archivo");
+						juego.guardarLigasEnArchivo(false);
 						break;
 					case 5:
 						opc = 5;
@@ -90,7 +98,7 @@ public class Menu {
 			case 4:
 				while (opc != 3) {
 					switch (mostrarSubMenu("\n"+"1- Todos los personajes o ligas que venzan a un personaje dado para cierta caract\n"
-						+ " 2- Listado ordenado de personajes por múltiples características \n"+"3- atrás\n")) {
+						+ " 2- Listado ordenado de personajes por mÃºltiples caracterÃ­sticas \n"+"3- atrÃ¡s\n")) {
 					case 1:
 						try {
 						String lista = juego.listarPersonajesQueVenzanAUno();
@@ -124,7 +132,9 @@ public class Menu {
 					case 3:
 						opc = 3;
 						generarMenu(juego);
+
 					}
+
 				}
 				opc = 0;
 				break;
@@ -146,6 +156,7 @@ public class Menu {
 		System.out.println(opciones + "\n");
 		return Integer.parseInt(input.readLine());
 	}
+
 	
 	private String mostrarMensaje(String opciones) throws NumberFormatException, IOException {
 		System.out.println(opciones + "\n");

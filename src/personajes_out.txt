@@ -1,9 +1,6 @@
- The Comedian Edward Blake
- Ozymandias Adrian Veidt
-SuperFer
+Anastasia
 The Comedian
-SuperRomi
-Tormenta
-SuperIta
 Ozymandias
-YuriGagari
+Héroe,Lagartija, Anastasia, , 150, 50, 200, 100
+Héroe,Edward Blake, The Comedian, , 150, 50, 200, 100
+Villano,Adrian Veidt, Ozymandias, , 200, 200, 180, 120

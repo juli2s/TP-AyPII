@@ -83,7 +83,7 @@ public class Juego {
 			while (linea != null) {
 				String[] data = linea.split(",");
 				try {
-					String tipoHeroe = data[0];
+					String tipoHeroe = data[0].trim();
 				
 					if (!tipoHeroe.equals("Héroe") && !tipoHeroe.equals("Villano") )
 					{
@@ -108,23 +108,21 @@ public class Juego {
 								destreza);
 
 						heroes.put(nombrePersonaje.trim(), h); //creo que la key tiene que ser el nmbre de personaje porque es es el que se pasa en ligas.in
-						this.competidores.add(h);
-
+						
 
 					}
 					if (tipoHeroe.equals("Villano")) {
 						Personaje v = new Personaje(nombreReal, nombrePersonaje,velocidad,
 								fuerza, resistencia,
 								destreza);
-
-
+					
+					
 						villanos.put(nombrePersonaje, v);
-						this.competidores.add(v);
+						
 					}
 
 				}catch (Exception e){
 					System.err.println(e);
-
 				}
 				
 				
@@ -132,6 +130,7 @@ public class Juego {
 
 			}
 			if (lector != null) {
+				System.out.println("Personajes cargados...");
 				lector.close();
 			}
 
@@ -141,6 +140,8 @@ public class Juego {
 		}
 
 	}
+
+
 
 	public void cargarPersonajesManualmente() {
 
@@ -185,7 +186,7 @@ public class Juego {
 
 	}
 
-	public void guardarPersonajesEnArchivo() {
+	public void guardarPersonajesEnArchivo(boolean mostrar) {
 		try {
 			FileWriter writer = new FileWriter("./src/personajes_out.txt", true);
 			Iterator<Map.Entry<String, Personaje>> iteratorHeroes = this.heroes.entrySet().iterator();
@@ -193,13 +194,20 @@ public class Juego {
 			while (iteratorHeroes.hasNext()) {
 				Map.Entry<String, Personaje> entrada = (Entry<String, Personaje>) iteratorHeroes.next();
 				Personaje p = entrada.getValue();
-				// System.out.println(iterator.next().toString());
-				writer.write(p.toString() + "\n");
+				if(!mostrar) {					
+					writer.write("Héroe, " + p.mostrarPersonaje() + "\n");
+				}else {
+					System.out.println(p.mostrarPersonaje());
+				}
 			}
 			while (iteratorVillanos.hasNext()) {
 				Map.Entry<String, Personaje> entrada = (Entry<String, Personaje>) iteratorVillanos.next();
 				Personaje p = entrada.getValue();
-				writer.write(p.toString() + "\n");
+				if(!mostrar) {					
+					writer.write("Villano, " + p.mostrarPersonaje() + "\n");
+				}else {
+					System.out.println(p.mostrarPersonaje());
+				}
 			}
 			System.out.println("Guardado completo...");
 			writer.close();
@@ -277,31 +285,31 @@ public class Juego {
 	 */
 
 	private void cargarLigas(String[] data)throws PerteneceALigaException, LigaYaExiste, CompetidorNoPerteneceAlJuego{
-
 		String nombreLiga = data[0].trim();
-		HashMap<String, Competidor> bandoDeLiga = null;
-		HashMap<String, Personaje> bando = null;
-		List<Competidor> listaCompetidores = new LinkedList<Competidor>();
+		HashMap<String, Competidor> ligaAAgregar = null;
+		HashMap<String, Personaje> tipoAchequear = null;
+		List<Competidor> listaCompetidores = new LinkedList();
+		Liga liga;
 		Competidor competidor = null;
-		String nombreCompetidor;
+		String nombreCompetidor = data[1].trim();
 		
-		verificarExistenciaLiga(nombreLiga);
-		
-		for (int i = 1; i < data.length; i++) {
-				
-			nombreCompetidor = data[i].trim();
-			verificarExistencia(nombreCompetidor);
-			competidor = obtenerCompetidor(nombreCompetidor);
+		if ( !(ligaDeHeroes.containsKey(nombreLiga)) && !(ligaDeVillanos.containsKey(nombreLiga)) ) {
 			
-			if(heroes.containsKey(nombreCompetidor) || ligaDeHeroes.containsKey(nombreCompetidor)){
-				bandoDeLiga = ligaDeHeroes;
-				bando = heroes; 
+			if(heroes.containsKey(nombreCompetidor) || ligaDeHeroes.containsKey(nombreCompetidor))
+			{
+				ligaAAgregar = ligaDeHeroes;
+				tipoAchequear = heroes; 
+			}
+			if(villanos.containsKey(nombreCompetidor) || ligaDeVillanos.containsKey(nombreCompetidor))
+			{   
+				//System.out.println(nombreCompetidor + " ligavillano");
+				ligaAAgregar = ligaDeVillanos;
+				tipoAchequear = villanos;
 			}
 			
-			if(villanos.containsKey(nombreCompetidor) || ligaDeVillanos.containsKey(nombreCompetidor)){   
-				bandoDeLiga = ligaDeVillanos;
-				bando = villanos;
-			}
+			if (ligaAAgregar == null) throw new CompetidorNoPerteneceAlJuego("El competidor no pertenece al Juego");
+			/** Agrega todos los heroes que vengan en la linea de esta liga**/
+			for (int i = 1; i < data.length; i++) {
 				
 				nombreCompetidor = data[i].trim();
 				
@@ -331,15 +339,9 @@ public class Juego {
 					System.err.println(e.getMessage());
 			    }
 				
-
+				
 			}
-			else if(bandoDeLiga.containsKey(nombreCompetidor)) 
-				competidor = bandoDeLiga.get(nombreCompetidor); //SI es una liga, tiene que estar ya cargada tambien
 			
-			listaCompetidores.add(competidor);
-		}
-			
-
 			liga = new Liga(nombreLiga, listaCompetidores);
 			ligaAAgregar.put(nombreLiga, liga);
 			
@@ -348,9 +350,8 @@ public class Juego {
 		{
 			throw new LigaYaExiste("La liga ya existe"); 
 		}		
-
 	}
-	
+		
 	
 	public void cargarLigaDesdeArchivo(String path) throws IOException, FormatoArchivoIncorrecto, PerteneceALigaException, CompetidorNoPerteneceAlJuego, LigaYaExiste {
 		FileReader archivo = new FileReader(path);
@@ -392,6 +393,38 @@ public class Juego {
 		System.out.println("Ligas de villanos en juego" + ligaDeVillanos.keySet().toString() + "\n");
 		
 		
+	}
+	
+	public void guardarLigasEnArchivo(boolean mostrar) {
+		try {
+			
+			FileWriter writer = new FileWriter("./src/ligas_out.txt", true);
+			Iterator<Entry<String, Competidor>> iteratorHeroes = this.ligaDeHeroes.entrySet().iterator();
+			Iterator<Map.Entry<String, Competidor>> iteratorVillanos = this.ligaDeVillanos.entrySet().iterator();
+			while (iteratorHeroes.hasNext()) {
+				Map.Entry<String, Competidor> entrada = (Entry<String, Competidor>) iteratorHeroes.next();
+				Competidor c = entrada.getValue();
+				if(!mostrar) {					
+					writer.write(c.toString() + "\n");
+				}else {
+					System.out.println(c.toString());
+				}
+			}
+			while (iteratorVillanos.hasNext()) {
+				Map.Entry<String, Competidor> entrada = (Entry<String, Competidor>) iteratorVillanos.next();
+				Competidor c = entrada.getValue();
+				if(!mostrar) {					
+					writer.write(c.toString() + "\n");
+				}else {
+					System.out.println(c.toString());
+				}
+			}
+			System.out.println("Guardado completo...");
+			writer.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
 	}
 	
 	public String pelear() throws CompetidorNoPerteneceAlJuego, LigaYaExiste{

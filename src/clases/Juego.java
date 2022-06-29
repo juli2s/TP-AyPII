@@ -411,6 +411,7 @@ public class Juego {
 					System.out.println(c.toString());
 				}
 			}
+			if (!mostrar) System.out.println("Guardado Completo..");
 			writer.close();
 		} catch (IOException e) {
 			e.printStackTrace();

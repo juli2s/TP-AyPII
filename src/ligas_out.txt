@@ -1,1 +1,5 @@
-Watchmen, , Anastasia, The Comedian
+ligaDePelea, SuperFer
+ligaDeHeroesTest, The Comedian
+SuperMinchis, YuriGagari, losMinchis
+losMinchis, SuperIta, Tormenta
+ligaDeVillanosTest, Ozymandias
